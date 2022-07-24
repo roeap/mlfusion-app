@@ -2,9 +2,9 @@ import type { MenuProps } from "antd";
 import { Layout, Menu, Button, Descriptions, PageHeader } from "antd";
 import { Route, Link, Routes } from "react-router-dom";
 import React from "react";
-import Plot from "react-plotly.js";
 import "./App.css";
 import { PieChartTwoTone, DesktopOutlined } from "@ant-design/icons";
+import { DataAssetExplorer, DataAssetCatalog } from "./routes";
 
 const { Content, Sider } = Layout;
 
@@ -67,50 +67,12 @@ const App: React.FC = () => (
       </PageHeader>
       <Content>
         <Routes>
-          <Route path="/" element={<PlotElem />} />
-          <Route path="meseros" element={<PlotElem2 />} />
+          <Route path="/" element={<DataAssetCatalog />} />
+          <Route path="meseros" element={<DataAssetExplorer />} />
         </Routes>
       </Content>
     </Layout>
   </Layout>
-);
-
-const PlotElem: React.FC = () => (
-  <Plot
-    style={{ width: "100%", height: "100%" }}
-    config={{ responsive: true }}
-    useResizeHandler={true}
-    data={[
-      {
-        x: [1, 2, 3],
-        y: [2, 6, 3],
-        type: "scatter",
-        mode: "lines+markers",
-        marker: { color: "red" },
-      },
-      { type: "bar", x: [1, 2, 3], y: [2, 5, 3] },
-    ]}
-    layout={{ autosize: true }}
-  />
-);
-
-const PlotElem2: React.FC = () => (
-  <Plot
-    style={{ width: "100%", height: "100%" }}
-    config={{ responsive: true }}
-    useResizeHandler={true}
-    data={[
-      {
-        x: [1, 2, 3, 4],
-        y: [2, 6, 3, 4],
-        type: "scatter",
-        mode: "lines+markers",
-        marker: { color: "red" },
-      },
-      { type: "bar", x: [1, 2, 3], y: [2, 5, 3] },
-    ]}
-    layout={{ autosize: true }}
-  />
 );
 
 export default App;
