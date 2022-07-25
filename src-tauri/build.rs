@@ -1,9 +1,4 @@
-use std::{
-    env,
-    fs::OpenOptions,
-    io::{Read, Write},
-    path::{Path, PathBuf},
-};
+use std::{env, path::PathBuf};
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     // override the build location, in order to check in the changes to proto files
