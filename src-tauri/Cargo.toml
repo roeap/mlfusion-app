@@ -36,6 +36,9 @@ prost = { version = "0.10", default-features = false }
 prost-types = { version = "0.10.0", default-features = false, optional = true }
 prost-derive = { version = "0.10", default-features = false }
 pbjson = "0.3.2"
+snafu = "0.7.1"
+log = "0.4.17"
+futures = "0.3.21"
 
 [features]
 # by default Tauri runs in production mode

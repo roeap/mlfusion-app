@@ -4,6 +4,7 @@
 )]
 mod api;
 mod clients;
+mod errors;
 mod models {
     include!("generated/flight_fusion.ipc.v1alpha1.rs");
     include!("generated/flight_fusion.ipc.v1alpha1.serde.rs");

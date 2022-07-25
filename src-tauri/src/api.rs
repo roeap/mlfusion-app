@@ -1,6 +1,7 @@
 use serde::{Deserialize, Serialize};
 
-use crate::models::{self, area_source_reference::Table};
+use crate::clients::mlfusion::MLFusionClient;
+use crate::models;
 
 #[derive(Serialize, Deserialize)]
 pub struct AreaInfo {
@@ -8,12 +9,15 @@ pub struct AreaInfo {
 }
 
 #[tauri::command]
-pub fn list_data_assets() -> Vec<AreaInfo> {
-    let area_ref = models::AreaSourceReference {
-        table: Some(Table::Location(models::AreaTableLocation {
-            areas: vec!["Hello".to_string()],
-            name: "World".to_string(),
-        })),
-    };
-    vec![AreaInfo { source: area_ref }]
+pub async fn list_data_assets() -> Result<Vec<AreaInfo>, String> {
+    Ok(MLFusionClient::try_new("localhost", 50051)
+        .await
+        .map_err(|err| err.to_string())?
+        .clone()
+        .list_data_assets()
+        .await
+        .map_err(|err| err.to_string())?
+        .into_iter()
+        .map(|info| AreaInfo { source: info })
+        .collect())
 }

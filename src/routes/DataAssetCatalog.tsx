@@ -7,7 +7,7 @@ export const DataAssetCatalog: React.FC = () => {
 
   useEffect(() => {
     mlfusion.list_data_assets().then((data) => setDataAssets(data));
-  }, [dataAssets]);
+  }, []);
   return <DataAssetList assets={dataAssets} />;
 };
 
