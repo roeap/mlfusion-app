@@ -4,7 +4,7 @@ import {
   AreaSourceReference,
   saveModeFromJSON,
   saveModeToJSON,
-} from "./common.js";
+} from "./common";
 import Long from "long";
 import * as _m0 from "protobufjs/minimal";
 

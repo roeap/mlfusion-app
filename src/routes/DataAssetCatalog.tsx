@@ -35,6 +35,19 @@ interface DataAssetItemProps {
 }
 
 const DataAssetItem: React.FC<DataAssetItemProps> = (props) => {
+  const { item } = props;
+  const [assetInfo, setAssetInfo] = useState<mlfusion.AreaSourceDetails | null>(
+    null
+  );
+
+  useEffect(() => {
+    console.log(item);
+    mlfusion
+      .get_data_asset_info(item.source)
+      .then((data) => setAssetInfo(data))
+      .catch((err) => console.log(err));
+  }, [item]);
+
   return (
     <Card>
       <Descriptions
@@ -44,7 +57,9 @@ const DataAssetItem: React.FC<DataAssetItemProps> = (props) => {
         extra={<Button type="primary">Explore</Button>}
       >
         <Descriptions.Item label="Total records">100</Descriptions.Item>
-        <Descriptions.Item label="Description">empty</Descriptions.Item>
+        <Descriptions.Item label="versioned">
+          {assetInfo && assetInfo.metadata?.isVersioned ? "true" : "false"}
+        </Descriptions.Item>
       </Descriptions>
     </Card>
   );

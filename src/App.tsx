@@ -4,16 +4,8 @@ import React, { useState } from "react";
 import "./App.css";
 import { PieChartTwoTone, DesktopOutlined } from "@ant-design/icons";
 import { DataAssetExplorer, DataAssetCatalog } from "./routes";
-import { invoke } from "@tauri-apps/api";
 
 const { Content, Sider } = Layout;
-
-// now we can call our Command!
-// Right-click the application background and open the developer tools.
-// You will see "Hello, World!" printed in the console!
-invoke("greet", { params: { name: "World", info: "serialized!" } })
-  // `invoke` returns a Promise
-  .then((response) => console.log(response));
 
 const App: React.FC = () => {
   const [collapsed, setCollapsed] = useState(false);

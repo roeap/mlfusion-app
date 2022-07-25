@@ -6,9 +6,9 @@ import {
   Tag,
   saveModeFromJSON,
   saveModeToJSON,
-} from "./common.js";
+} from "./common";
 import Long from "long";
-import { SignalFrame } from "./signals.js";
+import { SignalFrame } from "./signals";
 import * as _m0 from "protobufjs/minimal";
 
 export enum ActionStatus {

@@ -8,8 +8,8 @@ import {
   CommandDropSource,
   CommandSetMetadata,
   ResultActionStatus,
-} from "./message.js";
-import { DeltaOperationRequest } from "./delta.js";
+} from "./message";
+import { DeltaOperationRequest } from "./delta";
 import * as _m0 from "protobufjs/minimal";
 
 /** Wrappers around to commands and actions tha get passed to the Flight service. */

@@ -14,3 +14,5 @@ export async function get_data_asset_info(
 ): Promise<AreaSourceDetails> {
   return invoke("get_data_asset_info", { source });
 }
+
+export { AreaSourceReference, AreaSourceDetails };

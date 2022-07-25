@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { TableReference } from "./common.js";
+import { TableReference } from "./common";
 import * as _m0 from "protobufjs/minimal";
 
 export enum SignalType {

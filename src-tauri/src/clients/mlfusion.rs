@@ -74,8 +74,14 @@ impl MLFusionClient {
             .into_inner();
 
         match flight_info.flight_descriptor {
-            Some(descriptor) => Ok(models::AreaSourceDetails::decode(descriptor.cmd.as_ref())
-                .map_err(|err| MlFusionError::Decode { source: err })?),
+            Some(descr) => {
+                let metadata = models::AreaSourceMetadata::decode(descr.cmd.as_ref())
+                    .map_err(|err| MlFusionError::Decode { source: err })?;
+                Ok(models::AreaSourceDetails {
+                    metadata: Some(metadata),
+                    ..models::AreaSourceDetails::default()
+                })
+            }
             _ => Err(MlFusionError::MissingData),
         }
     }
