@@ -6,3 +6,5 @@ lint:
 breaking:
   use:
     - FILE
+build:
+  excludes: [node_modules]

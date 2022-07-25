@@ -1,5 +1,10 @@
 use serde::{Deserialize, Serialize};
 
+mod models {
+    include!("flight_fusion.ipc.v1alpha1.rs");
+    include!("flight_fusion.ipc.v1alpha1.serde.rs");
+}
+
 #[derive(Serialize, Deserialize, Clone)]
 pub struct Parameters {
     pub name: String,
@@ -7,6 +12,6 @@ pub struct Parameters {
 }
 
 #[tauri::command]
-pub fn greet(params: Parameters) -> String {
-    format!("Hello, {} - {}!", params.name, params.info)
+pub fn greet(source: models::AreaSourceReference) -> String {
+    format!("Hello, {:?}!", source.table)
 }
