@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { mlfusion } from "../clients";
-import { Card, List } from "antd";
+import { Card, List, Descriptions, Button } from "antd";
 
 export const DataAssetCatalog: React.FC = () => {
   const [dataAssets, setDataAssets] = useState<mlfusion.AreaInfo[]>([]);
@@ -23,9 +23,29 @@ const DataAssetList: React.FC<DataAssetListProps> = (props) => {
       dataSource={props.assets}
       renderItem={(item) => (
         <List.Item>
-          <Card title={item.source.location?.name}>Card content</Card>
+          <DataAssetItem item={item} />
         </List.Item>
       )}
     />
+  );
+};
+
+interface DataAssetItemProps {
+  item: mlfusion.AreaInfo;
+}
+
+const DataAssetItem: React.FC<DataAssetItemProps> = (props) => {
+  return (
+    <Card>
+      <Descriptions
+        title={props.item.source.location?.name}
+        bordered
+        size="small"
+        extra={<Button type="primary">Explore</Button>}
+      >
+        <Descriptions.Item label="Total records">100</Descriptions.Item>
+        <Descriptions.Item label="Description">empty</Descriptions.Item>
+      </Descriptions>
+    </Card>
   );
 };

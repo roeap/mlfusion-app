@@ -2,8 +2,6 @@
 import { TableReference } from "./common.js";
 import * as _m0 from "protobufjs/minimal";
 
-export const protobufPackage = "flight_fusion.ipc.v1alpha1";
-
 export enum SignalType {
   SIGNAL_TYPE_UNSPECIFIED = 0,
   SIGNAL_TYPE_OBSERVATION = 1,
@@ -872,7 +870,7 @@ type Builtin =
   | boolean
   | undefined;
 
-export type DeepPartial<T> = T extends Builtin
+type DeepPartial<T> = T extends Builtin
   ? T
   : T extends Array<infer U>
   ? Array<DeepPartial<U>>
@@ -883,7 +881,7 @@ export type DeepPartial<T> = T extends Builtin
   : Partial<T>;
 
 type KeysOfUnion<T> = T extends T ? keyof T : never;
-export type Exact<P, I extends P> = P extends Builtin
+type Exact<P, I extends P> = P extends Builtin
   ? P
   : P & { [K in keyof P]: Exact<P[K], I[K]> } & Record<
         Exclude<keyof I, KeysOfUnion<P>>,
