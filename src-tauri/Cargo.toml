@@ -26,6 +26,7 @@ serde = { version = "1.0", features = ["derive"] }
 tauri = { version = "1.0.4", features = ["api-all"] }
 
 # our dependencies
+arrow-flight = "18"
 tonic = { version = "0.7", default-features = false, features = [
   "transport",
   "codegen",
