@@ -1,0 +1,155 @@
+syntax = "proto3";
+package flight_fusion.ipc.v1alpha1;
+
+import "flight_fusion/ipc/v1alpha1/common.proto";
+import "flight_fusion/ipc/v1alpha1/signals.proto";
+
+// Describes a KQL query operation
+message CommandKqlOperation {
+  // name of the Kusto service to be queried
+  string service_name = 1;
+
+  // The KQL syntax.
+  string query = 2;
+}
+
+// Commands
+
+// List all sources defined under an area node
+message CommandListSources {
+  // If true, all sources in child nodes are listed as well
+  bool recursive = 1;
+}
+
+// Read entire table from storage
+message CommandReadDataset {
+  // source identifier
+  AreaSourceReference source = 1;
+  // column selection to load
+  repeated string column_names = 2;
+}
+
+// Drop a source (e.g. a Table) from the service
+message CommandDropSource {
+  // source identifier
+  AreaSourceReference source = 1;
+}
+
+// Update metadata associated with source
+message CommandSetMetadata {
+  // source identifier
+  AreaSourceReference source = 1;
+
+  // metadata to be written to source
+  AreaSourceMetadata meta = 2;
+}
+
+// Request to write data to area storage
+message CommandWriteIntoDataset {
+  // source identifier
+  AreaSourceReference source = 1;
+
+  // denotes how to beahve for existing data - defaults to append
+  SaveMode save_mode = 3;
+}
+
+// Execute a query against a given context
+message CommandExecuteQuery {
+  string query = 1;
+  oneof context {
+    AreaSourceReference source = 10;
+    SignalFrame frame = 11;
+    SourceCollection collection = 12;
+  }
+}
+
+// Results
+
+enum ActionStatus {
+  ACTION_STATUS_UNSPECIFIED = 0;
+  ACTION_STATUS_SUCCESS = 1;
+  ACTION_STATUS_FAILURE = 2;
+}
+
+// result when a source is dropped
+message ResultActionStatus {
+  ActionStatus status = 1;
+}
+
+message ResultDoPutUpdate {
+  BatchStatistics statistics = 1;
+}
+
+// Metadata
+
+// Metadata associated with an area source
+message AreaSourceMetadata {
+  // globally unique idetifier for the source
+  string id = 1;
+
+  // A human readable name for the source
+  string name = 2;
+
+  // A short descrptive text that describes the content
+  // and purpose of the data source
+  string description = 3;
+
+  // wether the table supports versioning
+  bool is_versioned = 4;
+
+  // source identifier
+  AreaSourceReference source = 5;
+
+  // tags associated with source
+  repeated Tag tags = 9;
+
+  // user defined properties
+  map<string, string> properties = 10;
+}
+
+// Detialed metadata and statistics about a source
+message AreaSourceDetails {
+  // globally unique idetifier for the source
+  string id = 1;
+
+  // Metadata associated with the source
+  AreaSourceMetadata metadata = 2;
+
+}
+
+/*
+ * Statistics for a physical plan node
+ * Fields are optional and can be inexact because the sources
+ * sometimes provide approximate estimates for performance reasons
+ * and the transformations output are not always predictable.
+ */
+message BatchStatistics {
+  // The number of table rows
+  int64 record_count = 1;
+
+  // total byte of the table rows
+  int64 total_byte_size = 2;
+
+  // Statistics on a column level
+  repeated ColumnStatistics column_statistics = 3;
+
+  // If true, any field that is defined is the actual value in the data provided by the operator (it is not
+  // an estimate). Any or all other fields might still be None, in which case no information is known.
+  // if false, any field that is has a value may contain an inexact estimate and may not be the actual value.
+  bool is_exact = 4;
+}
+
+// This table statistics are estimates about column properties
+message ColumnStatistics {
+  // Number of null values on column
+  int64 null_count = 1;
+
+  // Maximum value of column
+  string max_value = 2;
+
+  // Minimum value of column
+  string min_value = 3;
+
+  // Number of distinct values
+  int64 distinct_count = 4;
+}
