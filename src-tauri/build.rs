@@ -3,7 +3,7 @@ use std::{env, path::PathBuf};
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     // override the build location, in order to check in the changes to proto files
     let curr_out = env::var("OUT_DIR").unwrap();
-    env::set_var("OUT_DIR", "src");
+    env::set_var("OUT_DIR", "src/generated");
     // let root = PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("protos/flight_fusion");
     let root = PathBuf::from("../").join("protos/flight_fusion");
     let proto_files = vec![root.join("flight_fusion/ipc/v1alpha1/flight.proto")];

@@ -3,10 +3,15 @@
     windows_subsystem = "windows"
 )]
 mod api;
+mod clients;
+mod models {
+    include!("generated/flight_fusion.ipc.v1alpha1.rs");
+    include!("generated/flight_fusion.ipc.v1alpha1.serde.rs");
+}
 
 fn main() {
     tauri::Builder::default()
-        .invoke_handler(tauri::generate_handler![api::greet])
+        .invoke_handler(tauri::generate_handler![api::list_data_assets])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
