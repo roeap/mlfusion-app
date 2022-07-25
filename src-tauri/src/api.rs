@@ -21,3 +21,16 @@ pub async fn list_data_assets() -> Result<Vec<AreaInfo>, String> {
         .map(|info| AreaInfo { source: info })
         .collect())
 }
+
+#[tauri::command]
+pub async fn get_data_asset_info(
+    source: models::AreaSourceReference,
+) -> Result<models::AreaSourceDetails, String> {
+    Ok(MLFusionClient::try_new("localhost", 50051)
+        .await
+        .map_err(|err| err.to_string())?
+        .clone()
+        .get_data_asset_info(source)
+        .await
+        .map_err(|err| err.to_string())?)
+}

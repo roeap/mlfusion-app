@@ -1,4 +1,3 @@
-use serde::{Deserialize, Serialize};
 use snafu::Snafu;
 
 /// A specialized `Error` for object store-related errors
@@ -9,6 +8,11 @@ pub enum MlFusionError {
     Generic {
         source: Box<dyn std::error::Error + Send + Sync + 'static>,
     },
+    #[snafu(display("Missing data"))]
+    MissingData,
+
+    #[snafu(display("Error decoding message: {}", source))]
+    Decode { source: prost::DecodeError },
 }
 
 impl MlFusionError {

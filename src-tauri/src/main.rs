@@ -12,7 +12,10 @@ mod models {
 
 fn main() {
     tauri::Builder::default()
-        .invoke_handler(tauri::generate_handler![api::list_data_assets])
+        .invoke_handler(tauri::generate_handler![
+            api::list_data_assets,
+            api::get_data_asset_info
+        ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }

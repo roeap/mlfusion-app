@@ -1,5 +1,8 @@
 use crate::{errors::MlFusionError, models};
-use arrow_flight::{flight_service_client::FlightServiceClient, Criteria, FlightInfo};
+use arrow_flight::{
+    flight_descriptor::DescriptorType, flight_service_client::FlightServiceClient, Criteria,
+    FlightDescriptor, FlightInfo,
+};
 use futures::{stream::Stream, StreamExt, TryStreamExt};
 use log::debug;
 use prost::Message;
@@ -50,6 +53,31 @@ impl MLFusionClient {
             }
         });
         Ok(area_stream.try_collect::<Vec<_>>().await?)
+    }
+
+    pub async fn get_data_asset_info(
+        &mut self,
+        source: models::AreaSourceReference,
+    ) -> Result<models::AreaSourceDetails, MlFusionError> {
+        let descriptor = FlightDescriptor {
+            r#type: DescriptorType::Cmd.into(),
+            cmd: source.encode_to_vec(),
+            ..FlightDescriptor::default()
+        };
+        let flight_info = self
+            .flight_client
+            .get_flight_info(descriptor)
+            .await
+            .map_err(|e| MlFusionError::Generic {
+                source: Box::new(e),
+            })?
+            .into_inner();
+
+        match flight_info.flight_descriptor {
+            Some(descriptor) => Ok(models::AreaSourceDetails::decode(descriptor.cmd.as_ref())
+                .map_err(|err| MlFusionError::Decode { source: err })?),
+            _ => Err(MlFusionError::MissingData),
+        }
     }
 }
 
