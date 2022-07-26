@@ -41,7 +41,6 @@ const DataAssetItem: React.FC<DataAssetItemProps> = (props) => {
   );
 
   useEffect(() => {
-    console.log(item);
     mlfusion
       .get_data_asset_info(item.source)
       .then((data) => setAssetInfo(data))
