@@ -1612,114 +1612,6 @@ impl<'de> serde::Deserialize<'de> for CommandReadDataset {
         deserializer.deserialize_struct("flight_fusion.ipc.v1alpha1.CommandReadDataset", FIELDS, GeneratedVisitor)
     }
 }
-impl serde::Serialize for CommandSetMetadata {
-    #[allow(deprecated)]
-    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
-    where
-        S: serde::Serializer,
-    {
-        use serde::ser::SerializeStruct;
-        let mut len = 0;
-        if self.source.is_some() {
-            len += 1;
-        }
-        if self.meta.is_some() {
-            len += 1;
-        }
-        let mut struct_ser = serializer.serialize_struct("flight_fusion.ipc.v1alpha1.CommandSetMetadata", len)?;
-        if let Some(v) = self.source.as_ref() {
-            struct_ser.serialize_field("source", v)?;
-        }
-        if let Some(v) = self.meta.as_ref() {
-            struct_ser.serialize_field("meta", v)?;
-        }
-        struct_ser.end()
-    }
-}
-impl<'de> serde::Deserialize<'de> for CommandSetMetadata {
-    #[allow(deprecated)]
-    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
-    where
-        D: serde::Deserializer<'de>,
-    {
-        const FIELDS: &[&str] = &[
-            "source",
-            "meta",
-        ];
-
-        #[allow(clippy::enum_variant_names)]
-        enum GeneratedField {
-            Source,
-            Meta,
-        }
-        impl<'de> serde::Deserialize<'de> for GeneratedField {
-            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
-            where
-                D: serde::Deserializer<'de>,
-            {
-                struct GeneratedVisitor;
-
-                impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
-                    type Value = GeneratedField;
-
-                    fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                        write!(formatter, "expected one of: {:?}", &FIELDS)
-                    }
-
-                    #[allow(unused_variables)]
-                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
-                    where
-                        E: serde::de::Error,
-                    {
-                        match value {
-                            "source" => Ok(GeneratedField::Source),
-                            "meta" => Ok(GeneratedField::Meta),
-                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
-                        }
-                    }
-                }
-                deserializer.deserialize_identifier(GeneratedVisitor)
-            }
-        }
-        struct GeneratedVisitor;
-        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
-            type Value = CommandSetMetadata;
-
-            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                formatter.write_str("struct flight_fusion.ipc.v1alpha1.CommandSetMetadata")
-            }
-
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<CommandSetMetadata, V::Error>
-                where
-                    V: serde::de::MapAccess<'de>,
-            {
-                let mut source__ = None;
-                let mut meta__ = None;
-                while let Some(k) = map.next_key()? {
-                    match k {
-                        GeneratedField::Source => {
-                            if source__.is_some() {
-                                return Err(serde::de::Error::duplicate_field("source"));
-                            }
-                            source__ = Some(map.next_value()?);
-                        }
-                        GeneratedField::Meta => {
-                            if meta__.is_some() {
-                                return Err(serde::de::Error::duplicate_field("meta"));
-                            }
-                            meta__ = Some(map.next_value()?);
-                        }
-                    }
-                }
-                Ok(CommandSetMetadata {
-                    source: source__,
-                    meta: meta__,
-                })
-            }
-        }
-        deserializer.deserialize_struct("flight_fusion.ipc.v1alpha1.CommandSetMetadata", FIELDS, GeneratedVisitor)
-    }
-}
 impl serde::Serialize for CommandWriteIntoDataset {
     #[allow(deprecated)]
     fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
@@ -1828,6 +1720,76 @@ impl<'de> serde::Deserialize<'de> for CommandWriteIntoDataset {
             }
         }
         deserializer.deserialize_struct("flight_fusion.ipc.v1alpha1.CommandWriteIntoDataset", FIELDS, GeneratedVisitor)
+    }
+}
+impl serde::Serialize for DataType {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        let variant = match self {
+            Self::Unspecified => "DATA_TYPE_UNSPECIFIED",
+        };
+        serializer.serialize_str(variant)
+    }
+}
+impl<'de> serde::Deserialize<'de> for DataType {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &[
+            "DATA_TYPE_UNSPECIFIED",
+        ];
+
+        struct GeneratedVisitor;
+
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = DataType;
+
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                write!(formatter, "expected one of: {:?}", &FIELDS)
+            }
+
+            fn visit_i64<E>(self, v: i64) -> std::result::Result<Self::Value, E>
+            where
+                E: serde::de::Error,
+            {
+                use std::convert::TryFrom;
+                i32::try_from(v)
+                    .ok()
+                    .and_then(DataType::from_i32)
+                    .ok_or_else(|| {
+                        serde::de::Error::invalid_value(serde::de::Unexpected::Signed(v), &self)
+                    })
+            }
+
+            fn visit_u64<E>(self, v: u64) -> std::result::Result<Self::Value, E>
+            where
+                E: serde::de::Error,
+            {
+                use std::convert::TryFrom;
+                i32::try_from(v)
+                    .ok()
+                    .and_then(DataType::from_i32)
+                    .ok_or_else(|| {
+                        serde::de::Error::invalid_value(serde::de::Unexpected::Unsigned(v), &self)
+                    })
+            }
+
+            fn visit_str<E>(self, value: &str) -> std::result::Result<Self::Value, E>
+            where
+                E: serde::de::Error,
+            {
+                match value {
+                    "DATA_TYPE_UNSPECIFIED" => Ok(DataType::Unspecified),
+                    _ => Err(serde::de::Error::unknown_variant(value, FIELDS)),
+                }
+            }
+        }
+        deserializer.deserialize_any(GeneratedVisitor)
     }
 }
 impl serde::Serialize for DeltaCreateOperation {
@@ -2843,9 +2805,6 @@ impl serde::Serialize for FlightActionRequest {
                 flight_action_request::Action::Drop(v) => {
                     struct_ser.serialize_field("drop", v)?;
                 }
-                flight_action_request::Action::SetMeta(v) => {
-                    struct_ser.serialize_field("setMeta", v)?;
-                }
             }
         }
         struct_ser.end()
@@ -2859,13 +2818,11 @@ impl<'de> serde::Deserialize<'de> for FlightActionRequest {
     {
         const FIELDS: &[&str] = &[
             "drop",
-            "setMeta",
         ];
 
         #[allow(clippy::enum_variant_names)]
         enum GeneratedField {
             Drop,
-            SetMeta,
         }
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
@@ -2888,7 +2845,6 @@ impl<'de> serde::Deserialize<'de> for FlightActionRequest {
                     {
                         match value {
                             "drop" => Ok(GeneratedField::Drop),
-                            "setMeta" => Ok(GeneratedField::SetMeta),
                             _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
                         }
                     }
@@ -2916,12 +2872,6 @@ impl<'de> serde::Deserialize<'de> for FlightActionRequest {
                                 return Err(serde::de::Error::duplicate_field("drop"));
                             }
                             action__ = Some(flight_action_request::Action::Drop(map.next_value()?));
-                        }
-                        GeneratedField::SetMeta => {
-                            if action__.is_some() {
-                                return Err(serde::de::Error::duplicate_field("setMeta"));
-                            }
-                            action__ = Some(flight_action_request::Action::SetMeta(map.next_value()?));
                         }
                     }
                 }
@@ -3823,7 +3773,16 @@ impl serde::Serialize for Signal {
         if !self.description.is_empty() {
             len += 1;
         }
+        if self.data_type != 0 {
+            len += 1;
+        }
+        if self.nullable {
+            len += 1;
+        }
         if !self.traits.is_empty() {
+            len += 1;
+        }
+        if !self.metadata.is_empty() {
             len += 1;
         }
         let mut struct_ser = serializer.serialize_struct("flight_fusion.ipc.v1alpha1.Signal", len)?;
@@ -3836,8 +3795,19 @@ impl serde::Serialize for Signal {
         if !self.description.is_empty() {
             struct_ser.serialize_field("description", &self.description)?;
         }
+        if self.data_type != 0 {
+            let v = DataType::from_i32(self.data_type)
+                .ok_or_else(|| serde::ser::Error::custom(format!("Invalid variant {}", self.data_type)))?;
+            struct_ser.serialize_field("dataType", &v)?;
+        }
+        if self.nullable {
+            struct_ser.serialize_field("nullable", &self.nullable)?;
+        }
         if !self.traits.is_empty() {
             struct_ser.serialize_field("traits", &self.traits)?;
+        }
+        if !self.metadata.is_empty() {
+            struct_ser.serialize_field("metadata", &self.metadata)?;
         }
         struct_ser.end()
     }
@@ -3852,7 +3822,10 @@ impl<'de> serde::Deserialize<'de> for Signal {
             "uid",
             "name",
             "description",
+            "dataType",
+            "nullable",
             "traits",
+            "metadata",
         ];
 
         #[allow(clippy::enum_variant_names)]
@@ -3860,7 +3833,10 @@ impl<'de> serde::Deserialize<'de> for Signal {
             Uid,
             Name,
             Description,
+            DataType,
+            Nullable,
             Traits,
+            Metadata,
         }
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
@@ -3885,7 +3861,10 @@ impl<'de> serde::Deserialize<'de> for Signal {
                             "uid" => Ok(GeneratedField::Uid),
                             "name" => Ok(GeneratedField::Name),
                             "description" => Ok(GeneratedField::Description),
+                            "dataType" => Ok(GeneratedField::DataType),
+                            "nullable" => Ok(GeneratedField::Nullable),
                             "traits" => Ok(GeneratedField::Traits),
+                            "metadata" => Ok(GeneratedField::Metadata),
                             _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
                         }
                     }
@@ -3908,7 +3887,10 @@ impl<'de> serde::Deserialize<'de> for Signal {
                 let mut uid__ = None;
                 let mut name__ = None;
                 let mut description__ = None;
+                let mut data_type__ = None;
+                let mut nullable__ = None;
                 let mut traits__ = None;
+                let mut metadata__ = None;
                 while let Some(k) = map.next_key()? {
                     match k {
                         GeneratedField::Uid => {
@@ -3929,11 +3911,31 @@ impl<'de> serde::Deserialize<'de> for Signal {
                             }
                             description__ = Some(map.next_value()?);
                         }
+                        GeneratedField::DataType => {
+                            if data_type__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("dataType"));
+                            }
+                            data_type__ = Some(map.next_value::<DataType>()? as i32);
+                        }
+                        GeneratedField::Nullable => {
+                            if nullable__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("nullable"));
+                            }
+                            nullable__ = Some(map.next_value()?);
+                        }
                         GeneratedField::Traits => {
                             if traits__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("traits"));
                             }
                             traits__ = Some(map.next_value()?);
+                        }
+                        GeneratedField::Metadata => {
+                            if metadata__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("metadata"));
+                            }
+                            metadata__ = Some(
+                                map.next_value::<std::collections::HashMap<_, _>>()?
+                            );
                         }
                     }
                 }
@@ -3941,7 +3943,10 @@ impl<'de> serde::Deserialize<'de> for Signal {
                     uid: uid__.unwrap_or_default(),
                     name: name__.unwrap_or_default(),
                     description: description__.unwrap_or_default(),
+                    data_type: data_type__.unwrap_or_default(),
+                    nullable: nullable__.unwrap_or_default(),
                     traits: traits__.unwrap_or_default(),
+                    metadata: metadata__.unwrap_or_default(),
                 })
             }
         }
