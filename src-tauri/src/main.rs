@@ -3,6 +3,7 @@
     windows_subsystem = "windows"
 )]
 mod api;
+mod arrow;
 mod clients;
 mod errors;
 mod models {

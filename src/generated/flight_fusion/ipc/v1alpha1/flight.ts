@@ -6,7 +6,6 @@ import {
   CommandWriteIntoDataset,
   ResultDoPutUpdate,
   CommandDropSource,
-  CommandSetMetadata,
   ResultActionStatus,
 } from "./message";
 import { DeltaOperationRequest } from "./delta";
@@ -44,8 +43,6 @@ export interface FlightDoPutResponse {
 export interface FlightActionRequest {
   /** command to remove a dataset from the area store */
   drop: CommandDropSource | undefined;
-  /** Set the metadata for a data source */
-  setMeta: CommandSetMetadata | undefined;
 }
 
 export interface FlightActionResponse {
@@ -337,7 +334,7 @@ export const FlightDoPutResponse = {
 };
 
 function createBaseFlightActionRequest(): FlightActionRequest {
-  return { drop: undefined, setMeta: undefined };
+  return { drop: undefined };
 }
 
 export const FlightActionRequest = {
@@ -347,12 +344,6 @@ export const FlightActionRequest = {
   ): _m0.Writer {
     if (message.drop !== undefined) {
       CommandDropSource.encode(message.drop, writer.uint32(18).fork()).ldelim();
-    }
-    if (message.setMeta !== undefined) {
-      CommandSetMetadata.encode(
-        message.setMeta,
-        writer.uint32(26).fork()
-      ).ldelim();
     }
     return writer;
   },
@@ -367,9 +358,6 @@ export const FlightActionRequest = {
         case 2:
           message.drop = CommandDropSource.decode(reader, reader.uint32());
           break;
-        case 3:
-          message.setMeta = CommandSetMetadata.decode(reader, reader.uint32());
-          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -383,9 +371,6 @@ export const FlightActionRequest = {
       drop: isSet(object.drop)
         ? CommandDropSource.fromJSON(object.drop)
         : undefined,
-      setMeta: isSet(object.setMeta)
-        ? CommandSetMetadata.fromJSON(object.setMeta)
-        : undefined,
     };
   },
 
@@ -394,10 +379,6 @@ export const FlightActionRequest = {
     message.drop !== undefined &&
       (obj.drop = message.drop
         ? CommandDropSource.toJSON(message.drop)
-        : undefined);
-    message.setMeta !== undefined &&
-      (obj.setMeta = message.setMeta
-        ? CommandSetMetadata.toJSON(message.setMeta)
         : undefined);
     return obj;
   },
@@ -409,10 +390,6 @@ export const FlightActionRequest = {
     message.drop =
       object.drop !== undefined && object.drop !== null
         ? CommandDropSource.fromPartial(object.drop)
-        : undefined;
-    message.setMeta =
-      object.setMeta !== undefined && object.setMeta !== null
-        ? CommandSetMetadata.fromPartial(object.setMeta)
         : undefined;
     return message;
   },

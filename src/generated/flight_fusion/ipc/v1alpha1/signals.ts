@@ -53,6 +53,105 @@ export function signalTypeToJSON(object: SignalType): string {
   }
 }
 
+export enum DataType {
+  DATA_TYPE_UNSPECIFIED = 0,
+  DATA_TYPE_BOOLEAN = 1,
+  DATA_TYPE_INT8 = 2,
+  DATA_TYPE_INT16 = 3,
+  DATA_TYPE_INT32 = 4,
+  DATA_TYPE_INT64 = 5,
+  DATA_TYPE_UINT8 = 6,
+  DATA_TYPE_UINT16 = 7,
+  DATA_TYPE_UINT32 = 8,
+  DATA_TYPE_UINT64 = 9,
+  DATA_TYPE_FLOAT32 = 10,
+  DATA_TYPE_FLOAT64 = 11,
+  DATA_TYPE_STRING = 12,
+  UNRECOGNIZED = -1,
+}
+
+export function dataTypeFromJSON(object: any): DataType {
+  switch (object) {
+    case 0:
+    case "DATA_TYPE_UNSPECIFIED":
+      return DataType.DATA_TYPE_UNSPECIFIED;
+    case 1:
+    case "DATA_TYPE_BOOLEAN":
+      return DataType.DATA_TYPE_BOOLEAN;
+    case 2:
+    case "DATA_TYPE_INT8":
+      return DataType.DATA_TYPE_INT8;
+    case 3:
+    case "DATA_TYPE_INT16":
+      return DataType.DATA_TYPE_INT16;
+    case 4:
+    case "DATA_TYPE_INT32":
+      return DataType.DATA_TYPE_INT32;
+    case 5:
+    case "DATA_TYPE_INT64":
+      return DataType.DATA_TYPE_INT64;
+    case 6:
+    case "DATA_TYPE_UINT8":
+      return DataType.DATA_TYPE_UINT8;
+    case 7:
+    case "DATA_TYPE_UINT16":
+      return DataType.DATA_TYPE_UINT16;
+    case 8:
+    case "DATA_TYPE_UINT32":
+      return DataType.DATA_TYPE_UINT32;
+    case 9:
+    case "DATA_TYPE_UINT64":
+      return DataType.DATA_TYPE_UINT64;
+    case 10:
+    case "DATA_TYPE_FLOAT32":
+      return DataType.DATA_TYPE_FLOAT32;
+    case 11:
+    case "DATA_TYPE_FLOAT64":
+      return DataType.DATA_TYPE_FLOAT64;
+    case 12:
+    case "DATA_TYPE_STRING":
+      return DataType.DATA_TYPE_STRING;
+    case -1:
+    case "UNRECOGNIZED":
+    default:
+      return DataType.UNRECOGNIZED;
+  }
+}
+
+export function dataTypeToJSON(object: DataType): string {
+  switch (object) {
+    case DataType.DATA_TYPE_UNSPECIFIED:
+      return "DATA_TYPE_UNSPECIFIED";
+    case DataType.DATA_TYPE_BOOLEAN:
+      return "DATA_TYPE_BOOLEAN";
+    case DataType.DATA_TYPE_INT8:
+      return "DATA_TYPE_INT8";
+    case DataType.DATA_TYPE_INT16:
+      return "DATA_TYPE_INT16";
+    case DataType.DATA_TYPE_INT32:
+      return "DATA_TYPE_INT32";
+    case DataType.DATA_TYPE_INT64:
+      return "DATA_TYPE_INT64";
+    case DataType.DATA_TYPE_UINT8:
+      return "DATA_TYPE_UINT8";
+    case DataType.DATA_TYPE_UINT16:
+      return "DATA_TYPE_UINT16";
+    case DataType.DATA_TYPE_UINT32:
+      return "DATA_TYPE_UINT32";
+    case DataType.DATA_TYPE_UINT64:
+      return "DATA_TYPE_UINT64";
+    case DataType.DATA_TYPE_FLOAT32:
+      return "DATA_TYPE_FLOAT32";
+    case DataType.DATA_TYPE_FLOAT64:
+      return "DATA_TYPE_FLOAT64";
+    case DataType.DATA_TYPE_STRING:
+      return "DATA_TYPE_STRING";
+    case DataType.UNRECOGNIZED:
+    default:
+      return "UNRECOGNIZED";
+  }
+}
+
 export interface ExpressionReference {
   uid: string;
   expression: string;
@@ -66,7 +165,15 @@ export interface Signal {
   uid: string;
   name: string;
   description: string;
+  dataType: DataType;
+  nullable: boolean;
   traits: SignalTrait[];
+  metadata: { [key: string]: string };
+}
+
+export interface Signal_MetadataEntry {
+  key: string;
+  value: string;
 }
 
 export interface SignalTrait {
@@ -227,7 +334,15 @@ export const ModelReference = {
 };
 
 function createBaseSignal(): Signal {
-  return { uid: "", name: "", description: "", traits: [] };
+  return {
+    uid: "",
+    name: "",
+    description: "",
+    dataType: 0,
+    nullable: false,
+    traits: [],
+    metadata: {},
+  };
 }
 
 export const Signal = {
@@ -244,9 +359,21 @@ export const Signal = {
     if (message.description !== "") {
       writer.uint32(26).string(message.description);
     }
+    if (message.dataType !== 0) {
+      writer.uint32(32).int32(message.dataType);
+    }
+    if (message.nullable === true) {
+      writer.uint32(40).bool(message.nullable);
+    }
     for (const v of message.traits) {
       SignalTrait.encode(v!, writer.uint32(82).fork()).ldelim();
     }
+    Object.entries(message.metadata).forEach(([key, value]) => {
+      Signal_MetadataEntry.encode(
+        { key: key as any, value },
+        writer.uint32(90).fork()
+      ).ldelim();
+    });
     return writer;
   },
 
@@ -266,8 +393,20 @@ export const Signal = {
         case 3:
           message.description = reader.string();
           break;
+        case 4:
+          message.dataType = reader.int32() as any;
+          break;
+        case 5:
+          message.nullable = reader.bool();
+          break;
         case 10:
           message.traits.push(SignalTrait.decode(reader, reader.uint32()));
+          break;
+        case 11:
+          const entry11 = Signal_MetadataEntry.decode(reader, reader.uint32());
+          if (entry11.value !== undefined) {
+            message.metadata[entry11.key] = entry11.value;
+          }
           break;
         default:
           reader.skipType(tag & 7);
@@ -282,9 +421,20 @@ export const Signal = {
       uid: isSet(object.uid) ? String(object.uid) : "",
       name: isSet(object.name) ? String(object.name) : "",
       description: isSet(object.description) ? String(object.description) : "",
+      dataType: isSet(object.dataType) ? dataTypeFromJSON(object.dataType) : 0,
+      nullable: isSet(object.nullable) ? Boolean(object.nullable) : false,
       traits: Array.isArray(object?.traits)
         ? object.traits.map((e: any) => SignalTrait.fromJSON(e))
         : [],
+      metadata: isObject(object.metadata)
+        ? Object.entries(object.metadata).reduce<{ [key: string]: string }>(
+            (acc, [key, value]) => {
+              acc[key] = String(value);
+              return acc;
+            },
+            {}
+          )
+        : {},
     };
   },
 
@@ -294,12 +444,21 @@ export const Signal = {
     message.name !== undefined && (obj.name = message.name);
     message.description !== undefined &&
       (obj.description = message.description);
+    message.dataType !== undefined &&
+      (obj.dataType = dataTypeToJSON(message.dataType));
+    message.nullable !== undefined && (obj.nullable = message.nullable);
     if (message.traits) {
       obj.traits = message.traits.map((e) =>
         e ? SignalTrait.toJSON(e) : undefined
       );
     } else {
       obj.traits = [];
+    }
+    obj.metadata = {};
+    if (message.metadata) {
+      Object.entries(message.metadata).forEach(([k, v]) => {
+        obj.metadata[k] = v;
+      });
     }
     return obj;
   },
@@ -309,8 +468,84 @@ export const Signal = {
     message.uid = object.uid ?? "";
     message.name = object.name ?? "";
     message.description = object.description ?? "";
+    message.dataType = object.dataType ?? 0;
+    message.nullable = object.nullable ?? false;
     message.traits =
       object.traits?.map((e) => SignalTrait.fromPartial(e)) || [];
+    message.metadata = Object.entries(object.metadata ?? {}).reduce<{
+      [key: string]: string;
+    }>((acc, [key, value]) => {
+      if (value !== undefined) {
+        acc[key] = String(value);
+      }
+      return acc;
+    }, {});
+    return message;
+  },
+};
+
+function createBaseSignal_MetadataEntry(): Signal_MetadataEntry {
+  return { key: "", value: "" };
+}
+
+export const Signal_MetadataEntry = {
+  encode(
+    message: Signal_MetadataEntry,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
+    if (message.key !== "") {
+      writer.uint32(10).string(message.key);
+    }
+    if (message.value !== "") {
+      writer.uint32(18).string(message.value);
+    }
+    return writer;
+  },
+
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): Signal_MetadataEntry {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseSignal_MetadataEntry();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.key = reader.string();
+          break;
+        case 2:
+          message.value = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): Signal_MetadataEntry {
+    return {
+      key: isSet(object.key) ? String(object.key) : "",
+      value: isSet(object.value) ? String(object.value) : "",
+    };
+  },
+
+  toJSON(message: Signal_MetadataEntry): unknown {
+    const obj: any = {};
+    message.key !== undefined && (obj.key = message.key);
+    message.value !== undefined && (obj.value = message.value);
+    return obj;
+  },
+
+  fromPartial<I extends Exact<DeepPartial<Signal_MetadataEntry>, I>>(
+    object: I
+  ): Signal_MetadataEntry {
+    const message = createBaseSignal_MetadataEntry();
+    message.key = object.key ?? "";
+    message.value = object.value ?? "";
     return message;
   },
 };
@@ -887,6 +1122,10 @@ type Exact<P, I extends P> = P extends Builtin
         Exclude<keyof I, KeysOfUnion<P>>,
         never
       >;
+
+function isObject(value: any): boolean {
+  return typeof value === "object" && value !== null;
+}
 
 function isSet(value: any): boolean {
   return value !== null && value !== undefined;

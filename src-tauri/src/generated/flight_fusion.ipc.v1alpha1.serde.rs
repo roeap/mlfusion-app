@@ -1730,6 +1730,18 @@ impl serde::Serialize for DataType {
     {
         let variant = match self {
             Self::Unspecified => "DATA_TYPE_UNSPECIFIED",
+            Self::Boolean => "DATA_TYPE_BOOLEAN",
+            Self::Int8 => "DATA_TYPE_INT8",
+            Self::Int16 => "DATA_TYPE_INT16",
+            Self::Int32 => "DATA_TYPE_INT32",
+            Self::Int64 => "DATA_TYPE_INT64",
+            Self::Uint8 => "DATA_TYPE_UINT8",
+            Self::Uint16 => "DATA_TYPE_UINT16",
+            Self::Uint32 => "DATA_TYPE_UINT32",
+            Self::Uint64 => "DATA_TYPE_UINT64",
+            Self::Float32 => "DATA_TYPE_FLOAT32",
+            Self::Float64 => "DATA_TYPE_FLOAT64",
+            Self::String => "DATA_TYPE_STRING",
         };
         serializer.serialize_str(variant)
     }
@@ -1742,6 +1754,18 @@ impl<'de> serde::Deserialize<'de> for DataType {
     {
         const FIELDS: &[&str] = &[
             "DATA_TYPE_UNSPECIFIED",
+            "DATA_TYPE_BOOLEAN",
+            "DATA_TYPE_INT8",
+            "DATA_TYPE_INT16",
+            "DATA_TYPE_INT32",
+            "DATA_TYPE_INT64",
+            "DATA_TYPE_UINT8",
+            "DATA_TYPE_UINT16",
+            "DATA_TYPE_UINT32",
+            "DATA_TYPE_UINT64",
+            "DATA_TYPE_FLOAT32",
+            "DATA_TYPE_FLOAT64",
+            "DATA_TYPE_STRING",
         ];
 
         struct GeneratedVisitor;
@@ -1785,6 +1809,18 @@ impl<'de> serde::Deserialize<'de> for DataType {
             {
                 match value {
                     "DATA_TYPE_UNSPECIFIED" => Ok(DataType::Unspecified),
+                    "DATA_TYPE_BOOLEAN" => Ok(DataType::Boolean),
+                    "DATA_TYPE_INT8" => Ok(DataType::Int8),
+                    "DATA_TYPE_INT16" => Ok(DataType::Int16),
+                    "DATA_TYPE_INT32" => Ok(DataType::Int32),
+                    "DATA_TYPE_INT64" => Ok(DataType::Int64),
+                    "DATA_TYPE_UINT8" => Ok(DataType::Uint8),
+                    "DATA_TYPE_UINT16" => Ok(DataType::Uint16),
+                    "DATA_TYPE_UINT32" => Ok(DataType::Uint32),
+                    "DATA_TYPE_UINT64" => Ok(DataType::Uint64),
+                    "DATA_TYPE_FLOAT32" => Ok(DataType::Float32),
+                    "DATA_TYPE_FLOAT64" => Ok(DataType::Float64),
+                    "DATA_TYPE_STRING" => Ok(DataType::String),
                     _ => Err(serde::de::Error::unknown_variant(value, FIELDS)),
                 }
             }

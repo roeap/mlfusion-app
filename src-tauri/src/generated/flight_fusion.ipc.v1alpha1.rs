@@ -276,6 +276,18 @@ pub enum SignalType {
 #[repr(i32)]
 pub enum DataType {
     Unspecified = 0,
+    Boolean = 1,
+    Int8 = 2,
+    Int16 = 3,
+    Int32 = 4,
+    Int64 = 5,
+    Uint8 = 6,
+    Uint16 = 7,
+    Uint32 = 8,
+    Uint64 = 9,
+    Float32 = 10,
+    Float64 = 11,
+    String = 12,
 }
 /// Describes a KQL query operation
 #[derive(Clone, PartialEq, ::prost::Message)]
