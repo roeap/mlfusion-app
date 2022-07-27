@@ -1,6 +1,7 @@
 /* eslint-disable */
 import Long from "long";
 import { AreaSourceReference, Tag } from "./common";
+import { Signal } from "./signals";
 import * as _m0 from "protobufjs/minimal";
 
 /** Metadata associated with an area source */
@@ -18,6 +19,8 @@ export interface AreaSourceMetadata {
   isVersioned: boolean;
   /** source identifier */
   source: AreaSourceReference | undefined;
+  /** signals provided by area source */
+  signals: Signal[];
   /** tags associated with source */
   tags: Tag[];
   /** user defined properties */
@@ -79,6 +82,7 @@ function createBaseAreaSourceMetadata(): AreaSourceMetadata {
     description: "",
     isVersioned: false,
     source: undefined,
+    signals: [],
     tags: [],
     properties: {},
   };
@@ -106,6 +110,9 @@ export const AreaSourceMetadata = {
         message.source,
         writer.uint32(42).fork()
       ).ldelim();
+    }
+    for (const v of message.signals) {
+      Signal.encode(v!, writer.uint32(50).fork()).ldelim();
     }
     for (const v of message.tags) {
       Tag.encode(v!, writer.uint32(74).fork()).ldelim();
@@ -141,6 +148,9 @@ export const AreaSourceMetadata = {
         case 5:
           message.source = AreaSourceReference.decode(reader, reader.uint32());
           break;
+        case 6:
+          message.signals.push(Signal.decode(reader, reader.uint32()));
+          break;
         case 9:
           message.tags.push(Tag.decode(reader, reader.uint32()));
           break;
@@ -172,6 +182,9 @@ export const AreaSourceMetadata = {
       source: isSet(object.source)
         ? AreaSourceReference.fromJSON(object.source)
         : undefined,
+      signals: Array.isArray(object?.signals)
+        ? object.signals.map((e: any) => Signal.fromJSON(e))
+        : [],
       tags: Array.isArray(object?.tags)
         ? object.tags.map((e: any) => Tag.fromJSON(e))
         : [],
@@ -199,6 +212,13 @@ export const AreaSourceMetadata = {
       (obj.source = message.source
         ? AreaSourceReference.toJSON(message.source)
         : undefined);
+    if (message.signals) {
+      obj.signals = message.signals.map((e) =>
+        e ? Signal.toJSON(e) : undefined
+      );
+    } else {
+      obj.signals = [];
+    }
     if (message.tags) {
       obj.tags = message.tags.map((e) => (e ? Tag.toJSON(e) : undefined));
     } else {
@@ -225,6 +245,7 @@ export const AreaSourceMetadata = {
       object.source !== undefined && object.source !== null
         ? AreaSourceReference.fromPartial(object.source)
         : undefined;
+    message.signals = object.signals?.map((e) => Signal.fromPartial(e)) || [];
     message.tags = object.tags?.map((e) => Tag.fromPartial(e)) || [];
     message.properties = Object.entries(object.properties ?? {}).reduce<{
       [key: string]: string;

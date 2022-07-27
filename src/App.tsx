@@ -49,7 +49,7 @@ const App: React.FC = () => {
         className="site-layout"
         style={{ marginLeft: leftMargin, height: "100vh" }}
       >
-        <Content>
+        <Content style={{ overflow: "scroll" }}>
           <Routes>
             <Route path="/" element={<DataAssetCatalog />} />
             <Route path="meseros" element={<DataAssetExplorer />} />

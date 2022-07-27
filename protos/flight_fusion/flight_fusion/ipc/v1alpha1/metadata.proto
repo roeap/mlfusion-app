@@ -2,6 +2,7 @@ syntax = "proto3";
 package flight_fusion.ipc.v1alpha1;
 
 import "flight_fusion/ipc/v1alpha1/common.proto";
+import "flight_fusion/ipc/v1alpha1/signals.proto";
 
 // Metadata associated with an area source
 message AreaSourceMetadata {
@@ -20,6 +21,9 @@ message AreaSourceMetadata {
 
   // source identifier
   AreaSourceReference source = 5;
+
+  // signals provided by area source
+  repeated Signal signals = 6;
 
   // tags associated with source
   repeated Tag tags = 9;

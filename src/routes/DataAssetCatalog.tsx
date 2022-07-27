@@ -47,6 +47,8 @@ const DataAssetItem: React.FC<DataAssetItemProps> = (props) => {
       .catch((err) => console.log(err));
   }, [item]);
 
+  console.log(assetInfo && assetInfo.metadata);
+
   return (
     <Card>
       <Descriptions
@@ -59,6 +61,10 @@ const DataAssetItem: React.FC<DataAssetItemProps> = (props) => {
         <Descriptions.Item label="versioned">
           {assetInfo && assetInfo.metadata?.isVersioned ? "true" : "false"}
         </Descriptions.Item>
+        <Descriptions.Item label="fields">
+          {assetInfo && JSON.stringify(assetInfo.metadata?.signals)}
+        </Descriptions.Item>
+        <Descriptions.Item label="test">test</Descriptions.Item>
       </Descriptions>
     </Card>
   );

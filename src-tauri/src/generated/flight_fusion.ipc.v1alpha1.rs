@@ -86,82 +86,6 @@ pub enum SaveMode {
     Overwrite = 2,
     ErrorIfExists = 3,
 }
-/// Metadata associated with an area source
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct AreaSourceMetadata {
-    /// globally unique idetifier for the source
-    #[prost(string, tag="1")]
-    pub id: ::prost::alloc::string::String,
-    /// A human readable name for the source
-    #[prost(string, tag="2")]
-    pub name: ::prost::alloc::string::String,
-    /// A short descrptive text that describes the content
-    /// and purpose of the data source
-    #[prost(string, tag="3")]
-    pub description: ::prost::alloc::string::String,
-    /// wether the table supports versioning
-    #[prost(bool, tag="4")]
-    pub is_versioned: bool,
-    /// source identifier
-    #[prost(message, optional, tag="5")]
-    pub source: ::core::option::Option<AreaSourceReference>,
-    /// tags associated with source
-    #[prost(message, repeated, tag="9")]
-    pub tags: ::prost::alloc::vec::Vec<Tag>,
-    /// user defined properties
-    #[prost(map="string, string", tag="10")]
-    pub properties: ::std::collections::HashMap<::prost::alloc::string::String, ::prost::alloc::string::String>,
-}
-/// Detialed metadata and statistics about a source
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct AreaSourceDetails {
-    /// globally unique idetifier for the source
-    #[prost(string, tag="1")]
-    pub id: ::prost::alloc::string::String,
-    /// Metadata associated with the source
-    #[prost(message, optional, tag="2")]
-    pub metadata: ::core::option::Option<AreaSourceMetadata>,
-}
-///
-/// Statistics for a physical plan node
-/// Fields are optional and can be inexact because the sources
-/// sometimes provide approximate estimates for performance reasons
-/// and the transformations output are not always predictable.
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct BatchStatistics {
-    /// The number of table rows
-    #[prost(int64, tag="1")]
-    pub record_count: i64,
-    /// total byte of the table rows
-    #[prost(int64, tag="2")]
-    pub total_byte_size: i64,
-    /// Statistics on a column level
-    #[prost(message, repeated, tag="3")]
-    pub column_statistics: ::prost::alloc::vec::Vec<ColumnStatistics>,
-    /// If true, any field that is defined is the actual value in the data provided
-    /// by the operator (it is not an estimate). Any or all other fields might
-    /// still be None, in which case no information is known. if false, any field
-    /// that is has a value may contain an inexact estimate and may not be the
-    /// actual value.
-    #[prost(bool, tag="4")]
-    pub is_exact: bool,
-}
-/// This table statistics are estimates about column properties
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct ColumnStatistics {
-    /// Number of null values on column
-    #[prost(int64, tag="1")]
-    pub null_count: i64,
-    /// Maximum value of column
-    #[prost(string, tag="2")]
-    pub max_value: ::prost::alloc::string::String,
-    /// Minimum value of column
-    #[prost(string, tag="3")]
-    pub min_value: ::prost::alloc::string::String,
-    /// Number of distinct values
-    #[prost(int64, tag="4")]
-    pub distinct_count: i64,
-}
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ExpressionReference {
     #[prost(string, tag="1")]
@@ -288,6 +212,85 @@ pub enum DataType {
     Float32 = 10,
     Float64 = 11,
     String = 12,
+}
+/// Metadata associated with an area source
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct AreaSourceMetadata {
+    /// globally unique idetifier for the source
+    #[prost(string, tag="1")]
+    pub id: ::prost::alloc::string::String,
+    /// A human readable name for the source
+    #[prost(string, tag="2")]
+    pub name: ::prost::alloc::string::String,
+    /// A short descrptive text that describes the content
+    /// and purpose of the data source
+    #[prost(string, tag="3")]
+    pub description: ::prost::alloc::string::String,
+    /// wether the table supports versioning
+    #[prost(bool, tag="4")]
+    pub is_versioned: bool,
+    /// source identifier
+    #[prost(message, optional, tag="5")]
+    pub source: ::core::option::Option<AreaSourceReference>,
+    /// signals provided by area source
+    #[prost(message, repeated, tag="6")]
+    pub signals: ::prost::alloc::vec::Vec<Signal>,
+    /// tags associated with source
+    #[prost(message, repeated, tag="9")]
+    pub tags: ::prost::alloc::vec::Vec<Tag>,
+    /// user defined properties
+    #[prost(map="string, string", tag="10")]
+    pub properties: ::std::collections::HashMap<::prost::alloc::string::String, ::prost::alloc::string::String>,
+}
+/// Detialed metadata and statistics about a source
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct AreaSourceDetails {
+    /// globally unique idetifier for the source
+    #[prost(string, tag="1")]
+    pub id: ::prost::alloc::string::String,
+    /// Metadata associated with the source
+    #[prost(message, optional, tag="2")]
+    pub metadata: ::core::option::Option<AreaSourceMetadata>,
+}
+///
+/// Statistics for a physical plan node
+/// Fields are optional and can be inexact because the sources
+/// sometimes provide approximate estimates for performance reasons
+/// and the transformations output are not always predictable.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct BatchStatistics {
+    /// The number of table rows
+    #[prost(int64, tag="1")]
+    pub record_count: i64,
+    /// total byte of the table rows
+    #[prost(int64, tag="2")]
+    pub total_byte_size: i64,
+    /// Statistics on a column level
+    #[prost(message, repeated, tag="3")]
+    pub column_statistics: ::prost::alloc::vec::Vec<ColumnStatistics>,
+    /// If true, any field that is defined is the actual value in the data provided
+    /// by the operator (it is not an estimate). Any or all other fields might
+    /// still be None, in which case no information is known. if false, any field
+    /// that is has a value may contain an inexact estimate and may not be the
+    /// actual value.
+    #[prost(bool, tag="4")]
+    pub is_exact: bool,
+}
+/// This table statistics are estimates about column properties
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct ColumnStatistics {
+    /// Number of null values on column
+    #[prost(int64, tag="1")]
+    pub null_count: i64,
+    /// Maximum value of column
+    #[prost(string, tag="2")]
+    pub max_value: ::prost::alloc::string::String,
+    /// Minimum value of column
+    #[prost(string, tag="3")]
+    pub min_value: ::prost::alloc::string::String,
+    /// Number of distinct values
+    #[prost(int64, tag="4")]
+    pub distinct_count: i64,
 }
 /// Describes a KQL query operation
 #[derive(Clone, PartialEq, ::prost::Message)]

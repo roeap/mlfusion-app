@@ -1,7 +1,8 @@
 use crate::{errors::MlFusionError, models};
+use arrow::datatypes::Schema;
 use arrow_flight::{
     flight_descriptor::DescriptorType, flight_service_client::FlightServiceClient, Criteria,
-    FlightDescriptor, FlightInfo,
+    FlightDescriptor, FlightInfo, IpcMessage,
 };
 use futures::{stream::Stream, StreamExt, TryStreamExt};
 use log::debug;
@@ -75,8 +76,19 @@ impl MLFusionClient {
 
         match flight_info.flight_descriptor {
             Some(descr) => {
-                let metadata = models::AreaSourceMetadata::decode(descr.cmd.as_ref())
+                let arrow_schema: Schema =
+                    IpcMessage(flight_info.schema).try_into().map_err(|e| {
+                        MlFusionError::Generic {
+                            source: Box::new(e),
+                        }
+                    })?;
+                let mut metadata = models::AreaSourceMetadata::decode(descr.cmd.as_ref())
                     .map_err(|err| MlFusionError::Decode { source: err })?;
+                metadata.signals = arrow_schema
+                    .fields()
+                    .into_iter()
+                    .map(|f| models::Signal::from(f))
+                    .collect();
                 Ok(models::AreaSourceDetails {
                     metadata: Some(metadata),
                     ..models::AreaSourceDetails::default()

@@ -205,6 +205,9 @@ impl serde::Serialize for AreaSourceMetadata {
         if self.source.is_some() {
             len += 1;
         }
+        if !self.signals.is_empty() {
+            len += 1;
+        }
         if !self.tags.is_empty() {
             len += 1;
         }
@@ -227,6 +230,9 @@ impl serde::Serialize for AreaSourceMetadata {
         if let Some(v) = self.source.as_ref() {
             struct_ser.serialize_field("source", v)?;
         }
+        if !self.signals.is_empty() {
+            struct_ser.serialize_field("signals", &self.signals)?;
+        }
         if !self.tags.is_empty() {
             struct_ser.serialize_field("tags", &self.tags)?;
         }
@@ -248,6 +254,7 @@ impl<'de> serde::Deserialize<'de> for AreaSourceMetadata {
             "description",
             "isVersioned",
             "source",
+            "signals",
             "tags",
             "properties",
         ];
@@ -259,6 +266,7 @@ impl<'de> serde::Deserialize<'de> for AreaSourceMetadata {
             Description,
             IsVersioned,
             Source,
+            Signals,
             Tags,
             Properties,
         }
@@ -287,6 +295,7 @@ impl<'de> serde::Deserialize<'de> for AreaSourceMetadata {
                             "description" => Ok(GeneratedField::Description),
                             "isVersioned" => Ok(GeneratedField::IsVersioned),
                             "source" => Ok(GeneratedField::Source),
+                            "signals" => Ok(GeneratedField::Signals),
                             "tags" => Ok(GeneratedField::Tags),
                             "properties" => Ok(GeneratedField::Properties),
                             _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
@@ -313,6 +322,7 @@ impl<'de> serde::Deserialize<'de> for AreaSourceMetadata {
                 let mut description__ = None;
                 let mut is_versioned__ = None;
                 let mut source__ = None;
+                let mut signals__ = None;
                 let mut tags__ = None;
                 let mut properties__ = None;
                 while let Some(k) = map.next_key()? {
@@ -347,6 +357,12 @@ impl<'de> serde::Deserialize<'de> for AreaSourceMetadata {
                             }
                             source__ = Some(map.next_value()?);
                         }
+                        GeneratedField::Signals => {
+                            if signals__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("signals"));
+                            }
+                            signals__ = Some(map.next_value()?);
+                        }
                         GeneratedField::Tags => {
                             if tags__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("tags"));
@@ -369,6 +385,7 @@ impl<'de> serde::Deserialize<'de> for AreaSourceMetadata {
                     description: description__.unwrap_or_default(),
                     is_versioned: is_versioned__.unwrap_or_default(),
                     source: source__,
+                    signals: signals__.unwrap_or_default(),
                     tags: tags__.unwrap_or_default(),
                     properties: properties__.unwrap_or_default(),
                 })
