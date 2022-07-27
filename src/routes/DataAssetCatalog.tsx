@@ -1,6 +1,31 @@
 import React, { useEffect, useState } from "react";
 import { mlfusion } from "../clients";
-import { Card, List, Descriptions, Button } from "antd";
+import { Card, List, Descriptions, Button, Table } from "antd";
+import type { ColumnsType } from "antd/es/table";
+
+interface SignalColumn {
+  name: string;
+  description: string;
+  dataType: string;
+}
+
+const columns: ColumnsType<SignalColumn> = [
+  {
+    title: "Name",
+    dataIndex: "name",
+    key: "name",
+  },
+  {
+    title: "description",
+    dataIndex: "description",
+    key: "description",
+  },
+  {
+    title: "dataType",
+    dataIndex: "dataType",
+    key: "dataType",
+  },
+];
 
 export const DataAssetCatalog: React.FC = () => {
   const [dataAssets, setDataAssets] = useState<mlfusion.AreaInfo[]>([]);
@@ -47,7 +72,16 @@ const DataAssetItem: React.FC<DataAssetItemProps> = (props) => {
       .catch((err) => console.log(err));
   }, [item]);
 
-  console.log(assetInfo && assetInfo.metadata);
+  const signals = assetInfo
+    ? assetInfo.metadata
+      ? assetInfo.metadata.signals
+      : []
+    : [];
+  const data = signals.map((signal) => ({
+    name: signal.name,
+    description: signal.description,
+    dataType: signal.dataType.toString(),
+  }));
 
   return (
     <Card>
@@ -61,11 +95,8 @@ const DataAssetItem: React.FC<DataAssetItemProps> = (props) => {
         <Descriptions.Item label="versioned">
           {assetInfo && assetInfo.metadata?.isVersioned ? "true" : "false"}
         </Descriptions.Item>
-        <Descriptions.Item label="fields">
-          {assetInfo && JSON.stringify(assetInfo.metadata?.signals)}
-        </Descriptions.Item>
-        <Descriptions.Item label="test">test</Descriptions.Item>
       </Descriptions>
+      <Table columns={columns} dataSource={data} />
     </Card>
   );
 };
