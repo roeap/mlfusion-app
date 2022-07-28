@@ -5,6 +5,7 @@ import { EditOutlined, CheckOutlined } from "@ant-design/icons";
 
 export const DataAssetExplorer: React.FC = () => {
   const [isEditable, setIsEditable] = useState(false);
+  const [query, setQuery] = useState<string | undefined>(undefined);
 
   return (
     <Layout style={{ height: "100vh" }}>
@@ -17,6 +18,8 @@ export const DataAssetExplorer: React.FC = () => {
             placeholder="SQL query"
             disabled={!isEditable}
             style={{ width: "calc(100% - 31px)" }}
+            value={query}
+            onChange={(value) => setQuery(value.target.value)}
           />
           <Tooltip title={isEditable ? "submit query" : "edit query"}>
             <Button

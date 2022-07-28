@@ -2,7 +2,7 @@ import { Layout, Menu } from "antd";
 import { Route, Link, Routes } from "react-router-dom";
 import React, { useState } from "react";
 import "./App.css";
-import { PieChartTwoTone, DesktopOutlined } from "@ant-design/icons";
+import { SearchOutlined, DatabaseOutlined } from "@ant-design/icons";
 import { DataAssetExplorer, DataAssetCatalog } from "./routes";
 
 const { Content, Sider } = Layout;
@@ -34,13 +34,13 @@ const App: React.FC = () => {
         <div className="logo" />
         <Menu theme="dark" mode="inline" defaultSelectedKeys={["1"]}>
           <Menu.Item key="1">
-            <PieChartTwoTone />
-            <span>Deshboard</span>
+            <SearchOutlined />
+            <span>Catalog</span>
             <Link to="/" />
           </Menu.Item>
           <Menu.Item key="2">
-            <DesktopOutlined />
-            <span>Meseros</span>
+            <DatabaseOutlined />
+            <span>Dataset</span>
             <Link to="/meseros" />
           </Menu.Item>
         </Menu>
