@@ -1,0 +1,81 @@
+syntax = "proto3";
+package flight_fusion.ipc.v1alpha1;
+
+import "flight_fusion/ipc/v1alpha1/common.proto";
+
+enum SignalType {
+  SIGNAL_TYPE_UNSPECIFIED = 0;
+  SIGNAL_TYPE_OBSERVATION = 1;
+  SIGNAL_TYPE_CONSTANT = 2;
+  SIGNAL_TYPE_EXPRESSION = 3;
+  SIGNAL_TYPE_MODEL = 4;
+}
+
+enum DataType {
+  DATA_TYPE_UNSPECIFIED = 0;
+  DATA_TYPE_BOOLEAN = 1;
+  DATA_TYPE_INT8 = 2;
+  DATA_TYPE_INT16 = 3;
+  DATA_TYPE_INT32 = 4;
+  DATA_TYPE_INT64 = 5;
+  DATA_TYPE_UINT8 = 6;
+  DATA_TYPE_UINT16 = 7;
+  DATA_TYPE_UINT32 = 8;
+  DATA_TYPE_UINT64 = 9;
+  DATA_TYPE_FLOAT32 = 10;
+  DATA_TYPE_FLOAT64 = 11;
+  DATA_TYPE_STRING = 12;
+}
+
+message ExpressionReference {
+  string uid = 1;
+  string expression = 2;
+}
+
+message ModelReference { string uri = 1; }
+
+message Signal {
+  string uid = 1;
+  string name = 2;
+  string description = 3;
+  DataType data_type = 4;
+  bool nullable = 5;
+  repeated SignalTrait traits = 10;
+  map<string, string> metadata = 11;
+}
+
+message SignalTrait {
+  oneof trait {
+    SensitiveDataTrait sensitive = 1;
+    TimeSeriesTrait time_series = 2;
+    EntityReferenceTrait entity_reference = 3;
+  }
+}
+
+message SensitiveDataTrait { string level = 1; }
+
+message TimeSeriesTrait { string level = 1; }
+
+message EntityReferenceTrait { string level = 1; }
+
+message SignalProvider {
+  string uid = 1;
+  string name = 2;
+  string description = 3;
+  repeated Signal signals = 4;
+  repeated Signal inputs = 5;
+  oneof source {
+    TableReference table = 100;
+    ExpressionReference expression = 101;
+    ModelReference model = 102;
+  }
+}
+
+// A SignalFrame defines the context for a specialized query across
+// multiple data sources
+message SignalFrame {
+  string uid = 1;
+  string name = 2;
+  string description = 3;
+  repeated SignalProvider providers = 4;
+}

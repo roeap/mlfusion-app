@@ -1,0 +1,66 @@
+syntax = "proto3";
+package flight_fusion.ipc.v1alpha1;
+
+// File format for a file stroed on disk
+enum FileFormat {
+  // Undefined file format
+  FILE_FORMAT_UNSPECIFIED = 0;
+
+  // Stored in parquet
+  FILE_FORMAT_PARQUET = 1;
+
+  // Avro
+  FILE_FORMAT_AVRO = 2;
+
+  // Csv
+  FILE_FORMAT_CSV = 3;
+}
+
+enum SaveMode {
+  SAVE_MODE_UNSPECIFIED = 0;
+  SAVE_MODE_APPEND = 1;
+  SAVE_MODE_OVERWRITE = 2;
+  SAVE_MODE_ERROR_IF_EXISTS = 3;
+}
+
+message FileReference {
+  string path = 1;
+  FileFormat format = 2;
+}
+
+message TableReference {
+  oneof table {
+    FileReference file = 3;
+  }
+}
+
+message AreaTableLocation {
+  string name = 1;
+  repeated string areas = 2;
+}
+
+message AreaTableId {
+  string id = 1;
+}
+
+message AreaTableUri {
+  string uri = 1;
+}
+
+// area identifier
+message AreaSourceReference {
+  oneof table {
+    AreaTableLocation location = 1;
+    AreaTableId id = 2;
+    AreaTableUri uri = 3;
+  }
+}
+
+message SourceCollection {
+  repeated AreaSourceReference sources = 1;
+}
+
+message Tag {
+  string key = 1;
+  string value = 2;
+}

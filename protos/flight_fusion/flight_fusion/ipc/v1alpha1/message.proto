@@ -1,0 +1,69 @@
+syntax = "proto3";
+package flight_fusion.ipc.v1alpha1;
+
+import "flight_fusion/ipc/v1alpha1/common.proto";
+import "flight_fusion/ipc/v1alpha1/metadata.proto";
+import "flight_fusion/ipc/v1alpha1/signals.proto";
+
+// Describes a KQL query operation
+message CommandKqlOperation {
+  // name of the Kusto service to be queried
+  string service_name = 1;
+
+  // The KQL syntax.
+  string query = 2;
+}
+
+// Commands
+
+// List all sources defined under an area node
+message CommandListSources {
+  // If true, all sources in child nodes are listed as well
+  bool recursive = 1;
+}
+
+// Read entire table from storage
+message CommandReadDataset {
+  // source identifier
+  AreaSourceReference source = 1;
+  // column selection to load
+  repeated string column_names = 2;
+}
+
+// Drop a source (e.g. a Table) from the service
+message CommandDropSource {
+  // source identifier
+  AreaSourceReference source = 1;
+}
+
+// Request to write data to area storage
+message CommandWriteIntoDataset {
+  // source identifier
+  AreaSourceReference source = 1;
+
+  // denotes how to beahve for existing data - defaults to append
+  SaveMode save_mode = 3;
+}
+
+// Execute a query against a given context
+message CommandExecuteQuery {
+  string query = 1;
+  oneof context {
+    AreaSourceReference source = 10;
+    SignalFrame frame = 11;
+    SourceCollection collection = 12;
+  }
+}
+
+// Results
+
+enum ActionStatus {
+  ACTION_STATUS_UNSPECIFIED = 0;
+  ACTION_STATUS_SUCCESS = 1;
+  ACTION_STATUS_FAILURE = 2;
+}
+
+// result when a source is dropped
+message ResultActionStatus { ActionStatus status = 1; }
+
+message ResultDoPutUpdate { BatchStatistics statistics = 1; }

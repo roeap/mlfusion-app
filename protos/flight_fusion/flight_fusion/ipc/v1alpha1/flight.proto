@@ -1,0 +1,59 @@
+// Wrappers around to commands and actions tha get passed to the Flight service.
+syntax = "proto3";
+package flight_fusion.ipc.v1alpha1;
+
+import "flight_fusion/ipc/v1alpha1/message.proto";
+import "flight_fusion/ipc/v1alpha1/common.proto";
+import "flight_fusion/ipc/v1alpha1/delta.proto";
+
+// Requests submitted against the `do_get` endpoint
+message FlightDoGetRequest {
+  oneof command {
+    // execute a KQL query against a registered Kusto cluster
+    CommandKqlOperation kql = 1;
+
+    // Read data from a registered source
+    CommandReadDataset read = 2;
+
+    // Execute a query against a pre-defined context
+    CommandExecuteQuery query = 3;
+
+    // Perform a read operation against Delta table
+    DeltaOperationRequest delta = 4;
+  }
+}
+
+// Requests submitted against the `do_put` endpoint
+message FlightDoPutRequest {
+  oneof command {
+    // Write data into a registered source
+    CommandWriteIntoDataset storage = 2;
+
+    // Write data into delta table
+    DeltaOperationRequest delta = 3;
+  }
+}
+
+// Response recieved from `do_put` operations`
+message FlightDoPutResponse {
+  oneof payload {
+    // statistics for data written to source
+    ResultDoPutUpdate update = 1;
+  }
+}
+
+// Requests submitted against the `do_action` endpoint
+message FlightActionRequest {
+  // parameters for the specific action to be executed.
+  oneof action {
+    // command to remove a dataset from the area store
+    CommandDropSource drop = 2;
+  }
+}
+
+message FlightActionResponse {
+  oneof payload {
+    // Result when actions reports its execution status
+    ResultActionStatus status = 1;
+  }
+}

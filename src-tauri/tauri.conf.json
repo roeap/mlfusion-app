@@ -3,7 +3,7 @@
   "build": {
     "beforeBuildCommand": "yarn build",
     "beforeDevCommand": "yarn start",
-    "devPath": "http://localhost:5000",
+    "devPath": "http://localhost:3000",
     "distDir": "../build"
   },
   "package": {
@@ -29,7 +29,7 @@
         "icons/icon.icns",
         "icons/icon.ico"
       ],
-      "identifier": "org.mlfusion.dev",
+      "identifier": "mlfusion.dev",
       "longDescription": "",
       "macOS": {
         "entitlements": null,
@@ -56,10 +56,10 @@
     "windows": [
       {
         "fullscreen": false,
-        "height": 600,
+        "height": 800,
         "resizable": true,
         "title": "mlfusion",
-        "width": 800
+        "width": 1200
       }
     ]
   }

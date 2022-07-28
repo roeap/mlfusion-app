@@ -1,0 +1,38 @@
+syntax = "proto3";
+package flight_fusion.ipc.v1alpha1;
+
+import "flight_fusion/ipc/v1alpha1/common.proto";
+
+message DeltaCreateOperation {
+  SaveMode save_mode = 1;
+  string metadata = 2;
+}
+
+message DeltaWriteOperation {
+  SaveMode save_mode = 1;
+  repeated string partition_by = 2;
+  optional string predicate = 3;
+}
+
+message DeltaReadOperation {
+  // version of delta table to load
+  int64 version = 1;
+  // load delta version from point in time
+  string timestamp = 2;
+  string predicate = 3;
+  // column selection to load
+  repeated string column_names = 4;
+}
+
+message DeltaOperationRequest {
+  AreaSourceReference source = 1;
+  oneof operation {
+    DeltaCreateOperation create = 10;
+    DeltaWriteOperation write = 11;
+    DeltaReadOperation read = 12;
+  }
+}
+
+message DeltaOperationResponse {
+  string stats = 1;
+}

@@ -1,0 +1,16 @@
+version: v1
+managed:
+  enabled: true
+  go_package_prefix:
+    default: github.com/mlfusion/fusion/private/gen/proto/go
+    except:
+      - buf.build/googleapis/googleapis
+plugins:
+  - remote: buf.build/stephenh/plugins/ts-proto
+    out: ./src/generated
+    opt:
+      - esModuleInterop=true
+      - env=browser
+      - outputClientImpl=false
+      - outputServices=false
+      - exportCommonSymbols=false

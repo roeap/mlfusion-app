@@ -1,80 +1,63 @@
-import {
-  AppstoreOutlined,
-  BarChartOutlined,
-  CloudOutlined,
-  ShopOutlined,
-  TeamOutlined,
-  UploadOutlined,
-  UserOutlined,
-  VideoCameraOutlined,
-} from "@ant-design/icons";
-import type { MenuProps } from "antd";
 import { Layout, Menu } from "antd";
-import React from "react";
-import "antd/dist/antd.css";
+import { Route, Link, Routes } from "react-router-dom";
+import React, { useState } from "react";
 import "./App.css";
+import { SearchOutlined, DatabaseOutlined } from "@ant-design/icons";
+import { DataAssetExplorer, DataAssetCatalog } from "./routes";
 
-const { Header, Content, Footer, Sider } = Layout;
+const { Content, Sider } = Layout;
 
-const items: MenuProps["items"] = [
-  UserOutlined,
-  VideoCameraOutlined,
-  UploadOutlined,
-  BarChartOutlined,
-  CloudOutlined,
-  AppstoreOutlined,
-  TeamOutlined,
-  ShopOutlined,
-].map((icon, index) => ({
-  key: String(index + 1),
-  icon: React.createElement(icon),
-  label: `nav ${index + 1}`,
-}));
+const App: React.FC = () => {
+  const [collapsed, setCollapsed] = useState(false);
 
-const App: React.FC = () => (
-  <Layout hasSider>
-    <Sider
-      style={{
-        overflow: "auto",
-        height: "100vh",
-        position: "fixed",
-        left: 0,
-        top: 0,
-        bottom: 0,
-      }}
-    >
-      <div className="logo" />
-      <Menu
-        theme="dark"
-        mode="inline"
-        defaultSelectedKeys={["4"]}
-        items={items}
-      />
-    </Sider>
-    <Layout className="site-layout" style={{ marginLeft: 200 }}>
-      <Header className="site-layout-background" style={{ padding: 0 }} />
-      <Content style={{ margin: "24px 16px 0", overflow: "initial" }}>
-        <div
-          className="site-layout-background"
-          style={{ padding: 24, textAlign: "center" }}
-        >
-          <p>long content</p>
-          {
-            // indicates very long content
-            Array.from({ length: 100 }, (_, index) => (
-              <React.Fragment key={index}>
-                {index % 20 === 0 && index ? "more" : "..."}
-                <br />
-              </React.Fragment>
-            ))
-          }
-        </div>
-      </Content>
-      <Footer style={{ textAlign: "center" }}>
-        Ant Design ©2018 Created by Ant UED
-      </Footer>
+  const onCollapse = (value: boolean) => {
+    setCollapsed(value);
+  };
+
+  const leftMargin = collapsed ? 80 : 200;
+
+  return (
+    <Layout hasSider>
+      <Sider
+        collapsible
+        collapsed={collapsed}
+        onCollapse={onCollapse}
+        style={{
+          overflow: "auto",
+          height: "100vh",
+          position: "fixed",
+          left: 0,
+          top: 0,
+          bottom: 0,
+        }}
+      >
+        <div className="logo" />
+        <Menu theme="dark" mode="inline" defaultSelectedKeys={["1"]}>
+          <Menu.Item key="1">
+            <SearchOutlined />
+            <span>Catalog</span>
+            <Link to="/" />
+          </Menu.Item>
+          <Menu.Item key="2">
+            <DatabaseOutlined />
+            <span>Dataset</span>
+            <Link to="/meseros" />
+          </Menu.Item>
+        </Menu>
+      </Sider>
+      <Layout
+        className="site-layout"
+        style={{ marginLeft: leftMargin, height: "100vh" }}
+      >
+        <Content style={{ overflow: "scroll" }}>
+          <Routes>
+            <Route path="/" element={<DataAssetCatalog />} />
+            <Route path="meseros" element={<DataAssetExplorer />} />
+          </Routes>
+        </Content>
+      </Layout>
     </Layout>
-  </Layout>
-);
+  );
+};
 
 export default App;
