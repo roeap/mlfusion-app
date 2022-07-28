@@ -96,7 +96,7 @@ const DataAssetItem: React.FC<DataAssetItemProps> = (props) => {
           {assetInfo && assetInfo.metadata?.isVersioned ? "true" : "false"}
         </Descriptions.Item>
       </Descriptions>
-      <Table columns={columns} dataSource={data} />
+      <Table columns={columns} dataSource={data} size="small" />
     </Card>
   );
 };

@@ -37,9 +37,7 @@ impl MLFusionClient {
             .flight_client
             .list_flights(criterial)
             .await
-            .map_err(|e| MlFusionError::Generic {
-                source: Box::new(e),
-            })?
+            .map_err(|e| MlFusionError::from_external_error(Box::new(e)))?
             .into_inner()
             .into();
 
@@ -69,19 +67,14 @@ impl MLFusionClient {
             .flight_client
             .get_flight_info(descriptor)
             .await
-            .map_err(|e| MlFusionError::Generic {
-                source: Box::new(e),
-            })?
+            .map_err(|e| MlFusionError::from_external_error(Box::new(e)))?
             .into_inner();
 
         match flight_info.flight_descriptor {
             Some(descr) => {
-                let arrow_schema: Schema =
-                    IpcMessage(flight_info.schema).try_into().map_err(|e| {
-                        MlFusionError::Generic {
-                            source: Box::new(e),
-                        }
-                    })?;
+                let arrow_schema: Schema = IpcMessage(flight_info.schema)
+                    .try_into()
+                    .map_err(|e| MlFusionError::from_external_error(Box::new(e)))?;
                 let mut metadata = models::AreaSourceMetadata::decode(descr.cmd.as_ref())
                     .map_err(|err| MlFusionError::Decode { source: err })?;
                 metadata.signals = arrow_schema
