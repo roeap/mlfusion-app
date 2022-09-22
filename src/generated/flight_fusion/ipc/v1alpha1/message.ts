@@ -1,14 +1,8 @@
 /* eslint-disable */
-import {
-  SaveMode,
-  AreaSourceReference,
-  SourceCollection,
-  saveModeFromJSON,
-  saveModeToJSON,
-} from "./common";
-import { SignalFrame } from "./signals";
+import _m0 from "protobufjs/minimal";
+import { AreaSourceReference, SaveMode, saveModeFromJSON, saveModeToJSON, SourceCollection } from "./common";
 import { BatchStatistics } from "./metadata";
-import * as _m0 from "protobufjs/minimal";
+import { SignalFrame } from "./signals";
 
 export enum ActionStatus {
   ACTION_STATUS_UNSPECIFIED = 0,
@@ -66,7 +60,9 @@ export interface CommandListSources {
 /** Read entire table from storage */
 export interface CommandReadDataset {
   /** source identifier */
-  source: AreaSourceReference | undefined;
+  source:
+    | AreaSourceReference
+    | undefined;
   /** column selection to load */
   columnNames: string[];
 }
@@ -80,7 +76,9 @@ export interface CommandDropSource {
 /** Request to write data to area storage */
 export interface CommandWriteIntoDataset {
   /** source identifier */
-  source: AreaSourceReference | undefined;
+  source:
+    | AreaSourceReference
+    | undefined;
   /** denotes how to beahve for existing data - defaults to append */
   saveMode: SaveMode;
 }
@@ -107,10 +105,7 @@ function createBaseCommandKqlOperation(): CommandKqlOperation {
 }
 
 export const CommandKqlOperation = {
-  encode(
-    message: CommandKqlOperation,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: CommandKqlOperation, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.serviceName !== "") {
       writer.uint32(10).string(message.serviceName);
     }
@@ -150,15 +145,12 @@ export const CommandKqlOperation = {
 
   toJSON(message: CommandKqlOperation): unknown {
     const obj: any = {};
-    message.serviceName !== undefined &&
-      (obj.serviceName = message.serviceName);
+    message.serviceName !== undefined && (obj.serviceName = message.serviceName);
     message.query !== undefined && (obj.query = message.query);
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<CommandKqlOperation>, I>>(
-    object: I
-  ): CommandKqlOperation {
+  fromPartial<I extends Exact<DeepPartial<CommandKqlOperation>, I>>(object: I): CommandKqlOperation {
     const message = createBaseCommandKqlOperation();
     message.serviceName = object.serviceName ?? "";
     message.query = object.query ?? "";
@@ -171,10 +163,7 @@ function createBaseCommandListSources(): CommandListSources {
 }
 
 export const CommandListSources = {
-  encode(
-    message: CommandListSources,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: CommandListSources, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.recursive === true) {
       writer.uint32(8).bool(message.recursive);
     }
@@ -200,9 +189,7 @@ export const CommandListSources = {
   },
 
   fromJSON(object: any): CommandListSources {
-    return {
-      recursive: isSet(object.recursive) ? Boolean(object.recursive) : false,
-    };
+    return { recursive: isSet(object.recursive) ? Boolean(object.recursive) : false };
   },
 
   toJSON(message: CommandListSources): unknown {
@@ -211,9 +198,7 @@ export const CommandListSources = {
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<CommandListSources>, I>>(
-    object: I
-  ): CommandListSources {
+  fromPartial<I extends Exact<DeepPartial<CommandListSources>, I>>(object: I): CommandListSources {
     const message = createBaseCommandListSources();
     message.recursive = object.recursive ?? false;
     return message;
@@ -225,15 +210,9 @@ function createBaseCommandReadDataset(): CommandReadDataset {
 }
 
 export const CommandReadDataset = {
-  encode(
-    message: CommandReadDataset,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: CommandReadDataset, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.source !== undefined) {
-      AreaSourceReference.encode(
-        message.source,
-        writer.uint32(10).fork()
-      ).ldelim();
+      AreaSourceReference.encode(message.source, writer.uint32(10).fork()).ldelim();
     }
     for (const v of message.columnNames) {
       writer.uint32(18).string(v!);
@@ -264,21 +243,15 @@ export const CommandReadDataset = {
 
   fromJSON(object: any): CommandReadDataset {
     return {
-      source: isSet(object.source)
-        ? AreaSourceReference.fromJSON(object.source)
-        : undefined,
-      columnNames: Array.isArray(object?.columnNames)
-        ? object.columnNames.map((e: any) => String(e))
-        : [],
+      source: isSet(object.source) ? AreaSourceReference.fromJSON(object.source) : undefined,
+      columnNames: Array.isArray(object?.columnNames) ? object.columnNames.map((e: any) => String(e)) : [],
     };
   },
 
   toJSON(message: CommandReadDataset): unknown {
     const obj: any = {};
     message.source !== undefined &&
-      (obj.source = message.source
-        ? AreaSourceReference.toJSON(message.source)
-        : undefined);
+      (obj.source = message.source ? AreaSourceReference.toJSON(message.source) : undefined);
     if (message.columnNames) {
       obj.columnNames = message.columnNames.map((e) => e);
     } else {
@@ -287,14 +260,11 @@ export const CommandReadDataset = {
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<CommandReadDataset>, I>>(
-    object: I
-  ): CommandReadDataset {
+  fromPartial<I extends Exact<DeepPartial<CommandReadDataset>, I>>(object: I): CommandReadDataset {
     const message = createBaseCommandReadDataset();
-    message.source =
-      object.source !== undefined && object.source !== null
-        ? AreaSourceReference.fromPartial(object.source)
-        : undefined;
+    message.source = (object.source !== undefined && object.source !== null)
+      ? AreaSourceReference.fromPartial(object.source)
+      : undefined;
     message.columnNames = object.columnNames?.map((e) => e) || [];
     return message;
   },
@@ -305,15 +275,9 @@ function createBaseCommandDropSource(): CommandDropSource {
 }
 
 export const CommandDropSource = {
-  encode(
-    message: CommandDropSource,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: CommandDropSource, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.source !== undefined) {
-      AreaSourceReference.encode(
-        message.source,
-        writer.uint32(10).fork()
-      ).ldelim();
+      AreaSourceReference.encode(message.source, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
@@ -337,30 +301,21 @@ export const CommandDropSource = {
   },
 
   fromJSON(object: any): CommandDropSource {
-    return {
-      source: isSet(object.source)
-        ? AreaSourceReference.fromJSON(object.source)
-        : undefined,
-    };
+    return { source: isSet(object.source) ? AreaSourceReference.fromJSON(object.source) : undefined };
   },
 
   toJSON(message: CommandDropSource): unknown {
     const obj: any = {};
     message.source !== undefined &&
-      (obj.source = message.source
-        ? AreaSourceReference.toJSON(message.source)
-        : undefined);
+      (obj.source = message.source ? AreaSourceReference.toJSON(message.source) : undefined);
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<CommandDropSource>, I>>(
-    object: I
-  ): CommandDropSource {
+  fromPartial<I extends Exact<DeepPartial<CommandDropSource>, I>>(object: I): CommandDropSource {
     const message = createBaseCommandDropSource();
-    message.source =
-      object.source !== undefined && object.source !== null
-        ? AreaSourceReference.fromPartial(object.source)
-        : undefined;
+    message.source = (object.source !== undefined && object.source !== null)
+      ? AreaSourceReference.fromPartial(object.source)
+      : undefined;
     return message;
   },
 };
@@ -370,15 +325,9 @@ function createBaseCommandWriteIntoDataset(): CommandWriteIntoDataset {
 }
 
 export const CommandWriteIntoDataset = {
-  encode(
-    message: CommandWriteIntoDataset,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: CommandWriteIntoDataset, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.source !== undefined) {
-      AreaSourceReference.encode(
-        message.source,
-        writer.uint32(10).fork()
-      ).ldelim();
+      AreaSourceReference.encode(message.source, writer.uint32(10).fork()).ldelim();
     }
     if (message.saveMode !== 0) {
       writer.uint32(24).int32(message.saveMode);
@@ -386,10 +335,7 @@ export const CommandWriteIntoDataset = {
     return writer;
   },
 
-  decode(
-    input: _m0.Reader | Uint8Array,
-    length?: number
-  ): CommandWriteIntoDataset {
+  decode(input: _m0.Reader | Uint8Array, length?: number): CommandWriteIntoDataset {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseCommandWriteIntoDataset();
@@ -412,9 +358,7 @@ export const CommandWriteIntoDataset = {
 
   fromJSON(object: any): CommandWriteIntoDataset {
     return {
-      source: isSet(object.source)
-        ? AreaSourceReference.fromJSON(object.source)
-        : undefined,
+      source: isSet(object.source) ? AreaSourceReference.fromJSON(object.source) : undefined,
       saveMode: isSet(object.saveMode) ? saveModeFromJSON(object.saveMode) : 0,
     };
   },
@@ -422,58 +366,38 @@ export const CommandWriteIntoDataset = {
   toJSON(message: CommandWriteIntoDataset): unknown {
     const obj: any = {};
     message.source !== undefined &&
-      (obj.source = message.source
-        ? AreaSourceReference.toJSON(message.source)
-        : undefined);
-    message.saveMode !== undefined &&
-      (obj.saveMode = saveModeToJSON(message.saveMode));
+      (obj.source = message.source ? AreaSourceReference.toJSON(message.source) : undefined);
+    message.saveMode !== undefined && (obj.saveMode = saveModeToJSON(message.saveMode));
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<CommandWriteIntoDataset>, I>>(
-    object: I
-  ): CommandWriteIntoDataset {
+  fromPartial<I extends Exact<DeepPartial<CommandWriteIntoDataset>, I>>(object: I): CommandWriteIntoDataset {
     const message = createBaseCommandWriteIntoDataset();
-    message.source =
-      object.source !== undefined && object.source !== null
-        ? AreaSourceReference.fromPartial(object.source)
-        : undefined;
+    message.source = (object.source !== undefined && object.source !== null)
+      ? AreaSourceReference.fromPartial(object.source)
+      : undefined;
     message.saveMode = object.saveMode ?? 0;
     return message;
   },
 };
 
 function createBaseCommandExecuteQuery(): CommandExecuteQuery {
-  return {
-    query: "",
-    source: undefined,
-    frame: undefined,
-    collection: undefined,
-  };
+  return { query: "", source: undefined, frame: undefined, collection: undefined };
 }
 
 export const CommandExecuteQuery = {
-  encode(
-    message: CommandExecuteQuery,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: CommandExecuteQuery, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.query !== "") {
       writer.uint32(10).string(message.query);
     }
     if (message.source !== undefined) {
-      AreaSourceReference.encode(
-        message.source,
-        writer.uint32(82).fork()
-      ).ldelim();
+      AreaSourceReference.encode(message.source, writer.uint32(82).fork()).ldelim();
     }
     if (message.frame !== undefined) {
       SignalFrame.encode(message.frame, writer.uint32(90).fork()).ldelim();
     }
     if (message.collection !== undefined) {
-      SourceCollection.encode(
-        message.collection,
-        writer.uint32(98).fork()
-      ).ldelim();
+      SourceCollection.encode(message.collection, writer.uint32(98).fork()).ldelim();
     }
     return writer;
   },
@@ -508,15 +432,9 @@ export const CommandExecuteQuery = {
   fromJSON(object: any): CommandExecuteQuery {
     return {
       query: isSet(object.query) ? String(object.query) : "",
-      source: isSet(object.source)
-        ? AreaSourceReference.fromJSON(object.source)
-        : undefined,
-      frame: isSet(object.frame)
-        ? SignalFrame.fromJSON(object.frame)
-        : undefined,
-      collection: isSet(object.collection)
-        ? SourceCollection.fromJSON(object.collection)
-        : undefined,
+      source: isSet(object.source) ? AreaSourceReference.fromJSON(object.source) : undefined,
+      frame: isSet(object.frame) ? SignalFrame.fromJSON(object.frame) : undefined,
+      collection: isSet(object.collection) ? SourceCollection.fromJSON(object.collection) : undefined,
     };
   },
 
@@ -524,37 +442,25 @@ export const CommandExecuteQuery = {
     const obj: any = {};
     message.query !== undefined && (obj.query = message.query);
     message.source !== undefined &&
-      (obj.source = message.source
-        ? AreaSourceReference.toJSON(message.source)
-        : undefined);
-    message.frame !== undefined &&
-      (obj.frame = message.frame
-        ? SignalFrame.toJSON(message.frame)
-        : undefined);
+      (obj.source = message.source ? AreaSourceReference.toJSON(message.source) : undefined);
+    message.frame !== undefined && (obj.frame = message.frame ? SignalFrame.toJSON(message.frame) : undefined);
     message.collection !== undefined &&
-      (obj.collection = message.collection
-        ? SourceCollection.toJSON(message.collection)
-        : undefined);
+      (obj.collection = message.collection ? SourceCollection.toJSON(message.collection) : undefined);
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<CommandExecuteQuery>, I>>(
-    object: I
-  ): CommandExecuteQuery {
+  fromPartial<I extends Exact<DeepPartial<CommandExecuteQuery>, I>>(object: I): CommandExecuteQuery {
     const message = createBaseCommandExecuteQuery();
     message.query = object.query ?? "";
-    message.source =
-      object.source !== undefined && object.source !== null
-        ? AreaSourceReference.fromPartial(object.source)
-        : undefined;
-    message.frame =
-      object.frame !== undefined && object.frame !== null
-        ? SignalFrame.fromPartial(object.frame)
-        : undefined;
-    message.collection =
-      object.collection !== undefined && object.collection !== null
-        ? SourceCollection.fromPartial(object.collection)
-        : undefined;
+    message.source = (object.source !== undefined && object.source !== null)
+      ? AreaSourceReference.fromPartial(object.source)
+      : undefined;
+    message.frame = (object.frame !== undefined && object.frame !== null)
+      ? SignalFrame.fromPartial(object.frame)
+      : undefined;
+    message.collection = (object.collection !== undefined && object.collection !== null)
+      ? SourceCollection.fromPartial(object.collection)
+      : undefined;
     return message;
   },
 };
@@ -564,10 +470,7 @@ function createBaseResultActionStatus(): ResultActionStatus {
 }
 
 export const ResultActionStatus = {
-  encode(
-    message: ResultActionStatus,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: ResultActionStatus, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.status !== 0) {
       writer.uint32(8).int32(message.status);
     }
@@ -593,21 +496,16 @@ export const ResultActionStatus = {
   },
 
   fromJSON(object: any): ResultActionStatus {
-    return {
-      status: isSet(object.status) ? actionStatusFromJSON(object.status) : 0,
-    };
+    return { status: isSet(object.status) ? actionStatusFromJSON(object.status) : 0 };
   },
 
   toJSON(message: ResultActionStatus): unknown {
     const obj: any = {};
-    message.status !== undefined &&
-      (obj.status = actionStatusToJSON(message.status));
+    message.status !== undefined && (obj.status = actionStatusToJSON(message.status));
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<ResultActionStatus>, I>>(
-    object: I
-  ): ResultActionStatus {
+  fromPartial<I extends Exact<DeepPartial<ResultActionStatus>, I>>(object: I): ResultActionStatus {
     const message = createBaseResultActionStatus();
     message.status = object.status ?? 0;
     return message;
@@ -619,15 +517,9 @@ function createBaseResultDoPutUpdate(): ResultDoPutUpdate {
 }
 
 export const ResultDoPutUpdate = {
-  encode(
-    message: ResultDoPutUpdate,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: ResultDoPutUpdate, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.statistics !== undefined) {
-      BatchStatistics.encode(
-        message.statistics,
-        writer.uint32(10).fork()
-      ).ldelim();
+      BatchStatistics.encode(message.statistics, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
@@ -651,60 +543,35 @@ export const ResultDoPutUpdate = {
   },
 
   fromJSON(object: any): ResultDoPutUpdate {
-    return {
-      statistics: isSet(object.statistics)
-        ? BatchStatistics.fromJSON(object.statistics)
-        : undefined,
-    };
+    return { statistics: isSet(object.statistics) ? BatchStatistics.fromJSON(object.statistics) : undefined };
   },
 
   toJSON(message: ResultDoPutUpdate): unknown {
     const obj: any = {};
     message.statistics !== undefined &&
-      (obj.statistics = message.statistics
-        ? BatchStatistics.toJSON(message.statistics)
-        : undefined);
+      (obj.statistics = message.statistics ? BatchStatistics.toJSON(message.statistics) : undefined);
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<ResultDoPutUpdate>, I>>(
-    object: I
-  ): ResultDoPutUpdate {
+  fromPartial<I extends Exact<DeepPartial<ResultDoPutUpdate>, I>>(object: I): ResultDoPutUpdate {
     const message = createBaseResultDoPutUpdate();
-    message.statistics =
-      object.statistics !== undefined && object.statistics !== null
-        ? BatchStatistics.fromPartial(object.statistics)
-        : undefined;
+    message.statistics = (object.statistics !== undefined && object.statistics !== null)
+      ? BatchStatistics.fromPartial(object.statistics)
+      : undefined;
     return message;
   },
 };
 
-type Builtin =
-  | Date
-  | Function
-  | Uint8Array
-  | string
-  | number
-  | boolean
-  | undefined;
+type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
-type DeepPartial<T> = T extends Builtin
-  ? T
-  : T extends Array<infer U>
-  ? Array<DeepPartial<U>>
-  : T extends ReadonlyArray<infer U>
-  ? ReadonlyArray<DeepPartial<U>>
-  : T extends {}
-  ? { [K in keyof T]?: DeepPartial<T[K]> }
+type DeepPartial<T> = T extends Builtin ? T
+  : T extends Array<infer U> ? Array<DeepPartial<U>> : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
+  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
 
 type KeysOfUnion<T> = T extends T ? keyof T : never;
-type Exact<P, I extends P> = P extends Builtin
-  ? P
-  : P & { [K in keyof P]: Exact<P[K], I[K]> } & Record<
-        Exclude<keyof I, KeysOfUnion<P>>,
-        never
-      >;
+type Exact<P, I extends P> = P extends Builtin ? P
+  : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
 
 function isSet(value: any): boolean {
   return value !== null && value !== undefined;

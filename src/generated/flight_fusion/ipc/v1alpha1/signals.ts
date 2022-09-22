@@ -1,6 +1,6 @@
 /* eslint-disable */
+import _m0 from "protobufjs/minimal";
 import { TableReference } from "./common";
-import * as _m0 from "protobufjs/minimal";
 
 export enum SignalType {
   SIGNAL_TYPE_UNSPECIFIED = 0,
@@ -221,10 +221,7 @@ function createBaseExpressionReference(): ExpressionReference {
 }
 
 export const ExpressionReference = {
-  encode(
-    message: ExpressionReference,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: ExpressionReference, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.uid !== "") {
       writer.uint32(10).string(message.uid);
     }
@@ -269,9 +266,7 @@ export const ExpressionReference = {
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<ExpressionReference>, I>>(
-    object: I
-  ): ExpressionReference {
+  fromPartial<I extends Exact<DeepPartial<ExpressionReference>, I>>(object: I): ExpressionReference {
     const message = createBaseExpressionReference();
     message.uid = object.uid ?? "";
     message.expression = object.expression ?? "";
@@ -284,10 +279,7 @@ function createBaseModelReference(): ModelReference {
 }
 
 export const ModelReference = {
-  encode(
-    message: ModelReference,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: ModelReference, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.uri !== "") {
       writer.uint32(10).string(message.uri);
     }
@@ -313,9 +305,7 @@ export const ModelReference = {
   },
 
   fromJSON(object: any): ModelReference {
-    return {
-      uri: isSet(object.uri) ? String(object.uri) : "",
-    };
+    return { uri: isSet(object.uri) ? String(object.uri) : "" };
   },
 
   toJSON(message: ModelReference): unknown {
@@ -324,9 +314,7 @@ export const ModelReference = {
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<ModelReference>, I>>(
-    object: I
-  ): ModelReference {
+  fromPartial<I extends Exact<DeepPartial<ModelReference>, I>>(object: I): ModelReference {
     const message = createBaseModelReference();
     message.uri = object.uri ?? "";
     return message;
@@ -334,22 +322,11 @@ export const ModelReference = {
 };
 
 function createBaseSignal(): Signal {
-  return {
-    uid: "",
-    name: "",
-    description: "",
-    dataType: 0,
-    nullable: false,
-    traits: [],
-    metadata: {},
-  };
+  return { uid: "", name: "", description: "", dataType: 0, nullable: false, traits: [], metadata: {} };
 }
 
 export const Signal = {
-  encode(
-    message: Signal,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: Signal, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.uid !== "") {
       writer.uint32(10).string(message.uid);
     }
@@ -369,10 +346,7 @@ export const Signal = {
       SignalTrait.encode(v!, writer.uint32(82).fork()).ldelim();
     }
     Object.entries(message.metadata).forEach(([key, value]) => {
-      Signal_MetadataEntry.encode(
-        { key: key as any, value },
-        writer.uint32(90).fork()
-      ).ldelim();
+      Signal_MetadataEntry.encode({ key: key as any, value }, writer.uint32(90).fork()).ldelim();
     });
     return writer;
   },
@@ -423,17 +397,12 @@ export const Signal = {
       description: isSet(object.description) ? String(object.description) : "",
       dataType: isSet(object.dataType) ? dataTypeFromJSON(object.dataType) : 0,
       nullable: isSet(object.nullable) ? Boolean(object.nullable) : false,
-      traits: Array.isArray(object?.traits)
-        ? object.traits.map((e: any) => SignalTrait.fromJSON(e))
-        : [],
+      traits: Array.isArray(object?.traits) ? object.traits.map((e: any) => SignalTrait.fromJSON(e)) : [],
       metadata: isObject(object.metadata)
-        ? Object.entries(object.metadata).reduce<{ [key: string]: string }>(
-            (acc, [key, value]) => {
-              acc[key] = String(value);
-              return acc;
-            },
-            {}
-          )
+        ? Object.entries(object.metadata).reduce<{ [key: string]: string }>((acc, [key, value]) => {
+          acc[key] = String(value);
+          return acc;
+        }, {})
         : {},
     };
   },
@@ -442,15 +411,11 @@ export const Signal = {
     const obj: any = {};
     message.uid !== undefined && (obj.uid = message.uid);
     message.name !== undefined && (obj.name = message.name);
-    message.description !== undefined &&
-      (obj.description = message.description);
-    message.dataType !== undefined &&
-      (obj.dataType = dataTypeToJSON(message.dataType));
+    message.description !== undefined && (obj.description = message.description);
+    message.dataType !== undefined && (obj.dataType = dataTypeToJSON(message.dataType));
     message.nullable !== undefined && (obj.nullable = message.nullable);
     if (message.traits) {
-      obj.traits = message.traits.map((e) =>
-        e ? SignalTrait.toJSON(e) : undefined
-      );
+      obj.traits = message.traits.map((e) => e ? SignalTrait.toJSON(e) : undefined);
     } else {
       obj.traits = [];
     }
@@ -470,11 +435,8 @@ export const Signal = {
     message.description = object.description ?? "";
     message.dataType = object.dataType ?? 0;
     message.nullable = object.nullable ?? false;
-    message.traits =
-      object.traits?.map((e) => SignalTrait.fromPartial(e)) || [];
-    message.metadata = Object.entries(object.metadata ?? {}).reduce<{
-      [key: string]: string;
-    }>((acc, [key, value]) => {
+    message.traits = object.traits?.map((e) => SignalTrait.fromPartial(e)) || [];
+    message.metadata = Object.entries(object.metadata ?? {}).reduce<{ [key: string]: string }>((acc, [key, value]) => {
       if (value !== undefined) {
         acc[key] = String(value);
       }
@@ -489,10 +451,7 @@ function createBaseSignal_MetadataEntry(): Signal_MetadataEntry {
 }
 
 export const Signal_MetadataEntry = {
-  encode(
-    message: Signal_MetadataEntry,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: Signal_MetadataEntry, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.key !== "") {
       writer.uint32(10).string(message.key);
     }
@@ -502,10 +461,7 @@ export const Signal_MetadataEntry = {
     return writer;
   },
 
-  decode(
-    input: _m0.Reader | Uint8Array,
-    length?: number
-  ): Signal_MetadataEntry {
+  decode(input: _m0.Reader | Uint8Array, length?: number): Signal_MetadataEntry {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseSignal_MetadataEntry();
@@ -527,10 +483,7 @@ export const Signal_MetadataEntry = {
   },
 
   fromJSON(object: any): Signal_MetadataEntry {
-    return {
-      key: isSet(object.key) ? String(object.key) : "",
-      value: isSet(object.value) ? String(object.value) : "",
-    };
+    return { key: isSet(object.key) ? String(object.key) : "", value: isSet(object.value) ? String(object.value) : "" };
   },
 
   toJSON(message: Signal_MetadataEntry): unknown {
@@ -540,9 +493,7 @@ export const Signal_MetadataEntry = {
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<Signal_MetadataEntry>, I>>(
-    object: I
-  ): Signal_MetadataEntry {
+  fromPartial<I extends Exact<DeepPartial<Signal_MetadataEntry>, I>>(object: I): Signal_MetadataEntry {
     const message = createBaseSignal_MetadataEntry();
     message.key = object.key ?? "";
     message.value = object.value ?? "";
@@ -551,35 +502,19 @@ export const Signal_MetadataEntry = {
 };
 
 function createBaseSignalTrait(): SignalTrait {
-  return {
-    sensitive: undefined,
-    timeSeries: undefined,
-    entityReference: undefined,
-  };
+  return { sensitive: undefined, timeSeries: undefined, entityReference: undefined };
 }
 
 export const SignalTrait = {
-  encode(
-    message: SignalTrait,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: SignalTrait, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.sensitive !== undefined) {
-      SensitiveDataTrait.encode(
-        message.sensitive,
-        writer.uint32(10).fork()
-      ).ldelim();
+      SensitiveDataTrait.encode(message.sensitive, writer.uint32(10).fork()).ldelim();
     }
     if (message.timeSeries !== undefined) {
-      TimeSeriesTrait.encode(
-        message.timeSeries,
-        writer.uint32(18).fork()
-      ).ldelim();
+      TimeSeriesTrait.encode(message.timeSeries, writer.uint32(18).fork()).ldelim();
     }
     if (message.entityReference !== undefined) {
-      EntityReferenceTrait.encode(
-        message.entityReference,
-        writer.uint32(26).fork()
-      ).ldelim();
+      EntityReferenceTrait.encode(message.entityReference, writer.uint32(26).fork()).ldelim();
     }
     return writer;
   },
@@ -592,19 +527,13 @@ export const SignalTrait = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.sensitive = SensitiveDataTrait.decode(
-            reader,
-            reader.uint32()
-          );
+          message.sensitive = SensitiveDataTrait.decode(reader, reader.uint32());
           break;
         case 2:
           message.timeSeries = TimeSeriesTrait.decode(reader, reader.uint32());
           break;
         case 3:
-          message.entityReference = EntityReferenceTrait.decode(
-            reader,
-            reader.uint32()
-          );
+          message.entityReference = EntityReferenceTrait.decode(reader, reader.uint32());
           break;
         default:
           reader.skipType(tag & 7);
@@ -616,12 +545,8 @@ export const SignalTrait = {
 
   fromJSON(object: any): SignalTrait {
     return {
-      sensitive: isSet(object.sensitive)
-        ? SensitiveDataTrait.fromJSON(object.sensitive)
-        : undefined,
-      timeSeries: isSet(object.timeSeries)
-        ? TimeSeriesTrait.fromJSON(object.timeSeries)
-        : undefined,
+      sensitive: isSet(object.sensitive) ? SensitiveDataTrait.fromJSON(object.sensitive) : undefined,
+      timeSeries: isSet(object.timeSeries) ? TimeSeriesTrait.fromJSON(object.timeSeries) : undefined,
       entityReference: isSet(object.entityReference)
         ? EntityReferenceTrait.fromJSON(object.entityReference)
         : undefined,
@@ -631,13 +556,9 @@ export const SignalTrait = {
   toJSON(message: SignalTrait): unknown {
     const obj: any = {};
     message.sensitive !== undefined &&
-      (obj.sensitive = message.sensitive
-        ? SensitiveDataTrait.toJSON(message.sensitive)
-        : undefined);
+      (obj.sensitive = message.sensitive ? SensitiveDataTrait.toJSON(message.sensitive) : undefined);
     message.timeSeries !== undefined &&
-      (obj.timeSeries = message.timeSeries
-        ? TimeSeriesTrait.toJSON(message.timeSeries)
-        : undefined);
+      (obj.timeSeries = message.timeSeries ? TimeSeriesTrait.toJSON(message.timeSeries) : undefined);
     message.entityReference !== undefined &&
       (obj.entityReference = message.entityReference
         ? EntityReferenceTrait.toJSON(message.entityReference)
@@ -645,22 +566,17 @@ export const SignalTrait = {
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<SignalTrait>, I>>(
-    object: I
-  ): SignalTrait {
+  fromPartial<I extends Exact<DeepPartial<SignalTrait>, I>>(object: I): SignalTrait {
     const message = createBaseSignalTrait();
-    message.sensitive =
-      object.sensitive !== undefined && object.sensitive !== null
-        ? SensitiveDataTrait.fromPartial(object.sensitive)
-        : undefined;
-    message.timeSeries =
-      object.timeSeries !== undefined && object.timeSeries !== null
-        ? TimeSeriesTrait.fromPartial(object.timeSeries)
-        : undefined;
-    message.entityReference =
-      object.entityReference !== undefined && object.entityReference !== null
-        ? EntityReferenceTrait.fromPartial(object.entityReference)
-        : undefined;
+    message.sensitive = (object.sensitive !== undefined && object.sensitive !== null)
+      ? SensitiveDataTrait.fromPartial(object.sensitive)
+      : undefined;
+    message.timeSeries = (object.timeSeries !== undefined && object.timeSeries !== null)
+      ? TimeSeriesTrait.fromPartial(object.timeSeries)
+      : undefined;
+    message.entityReference = (object.entityReference !== undefined && object.entityReference !== null)
+      ? EntityReferenceTrait.fromPartial(object.entityReference)
+      : undefined;
     return message;
   },
 };
@@ -670,10 +586,7 @@ function createBaseSensitiveDataTrait(): SensitiveDataTrait {
 }
 
 export const SensitiveDataTrait = {
-  encode(
-    message: SensitiveDataTrait,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: SensitiveDataTrait, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.level !== "") {
       writer.uint32(10).string(message.level);
     }
@@ -699,9 +612,7 @@ export const SensitiveDataTrait = {
   },
 
   fromJSON(object: any): SensitiveDataTrait {
-    return {
-      level: isSet(object.level) ? String(object.level) : "",
-    };
+    return { level: isSet(object.level) ? String(object.level) : "" };
   },
 
   toJSON(message: SensitiveDataTrait): unknown {
@@ -710,9 +621,7 @@ export const SensitiveDataTrait = {
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<SensitiveDataTrait>, I>>(
-    object: I
-  ): SensitiveDataTrait {
+  fromPartial<I extends Exact<DeepPartial<SensitiveDataTrait>, I>>(object: I): SensitiveDataTrait {
     const message = createBaseSensitiveDataTrait();
     message.level = object.level ?? "";
     return message;
@@ -724,10 +633,7 @@ function createBaseTimeSeriesTrait(): TimeSeriesTrait {
 }
 
 export const TimeSeriesTrait = {
-  encode(
-    message: TimeSeriesTrait,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: TimeSeriesTrait, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.level !== "") {
       writer.uint32(10).string(message.level);
     }
@@ -753,9 +659,7 @@ export const TimeSeriesTrait = {
   },
 
   fromJSON(object: any): TimeSeriesTrait {
-    return {
-      level: isSet(object.level) ? String(object.level) : "",
-    };
+    return { level: isSet(object.level) ? String(object.level) : "" };
   },
 
   toJSON(message: TimeSeriesTrait): unknown {
@@ -764,9 +668,7 @@ export const TimeSeriesTrait = {
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<TimeSeriesTrait>, I>>(
-    object: I
-  ): TimeSeriesTrait {
+  fromPartial<I extends Exact<DeepPartial<TimeSeriesTrait>, I>>(object: I): TimeSeriesTrait {
     const message = createBaseTimeSeriesTrait();
     message.level = object.level ?? "";
     return message;
@@ -778,20 +680,14 @@ function createBaseEntityReferenceTrait(): EntityReferenceTrait {
 }
 
 export const EntityReferenceTrait = {
-  encode(
-    message: EntityReferenceTrait,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: EntityReferenceTrait, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.level !== "") {
       writer.uint32(10).string(message.level);
     }
     return writer;
   },
 
-  decode(
-    input: _m0.Reader | Uint8Array,
-    length?: number
-  ): EntityReferenceTrait {
+  decode(input: _m0.Reader | Uint8Array, length?: number): EntityReferenceTrait {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseEntityReferenceTrait();
@@ -810,9 +706,7 @@ export const EntityReferenceTrait = {
   },
 
   fromJSON(object: any): EntityReferenceTrait {
-    return {
-      level: isSet(object.level) ? String(object.level) : "",
-    };
+    return { level: isSet(object.level) ? String(object.level) : "" };
   },
 
   toJSON(message: EntityReferenceTrait): unknown {
@@ -821,9 +715,7 @@ export const EntityReferenceTrait = {
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<EntityReferenceTrait>, I>>(
-    object: I
-  ): EntityReferenceTrait {
+  fromPartial<I extends Exact<DeepPartial<EntityReferenceTrait>, I>>(object: I): EntityReferenceTrait {
     const message = createBaseEntityReferenceTrait();
     message.level = object.level ?? "";
     return message;
@@ -844,10 +736,7 @@ function createBaseSignalProvider(): SignalProvider {
 }
 
 export const SignalProvider = {
-  encode(
-    message: SignalProvider,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: SignalProvider, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.uid !== "") {
       writer.uint32(10).string(message.uid);
     }
@@ -867,10 +756,7 @@ export const SignalProvider = {
       TableReference.encode(message.table, writer.uint32(802).fork()).ldelim();
     }
     if (message.expression !== undefined) {
-      ExpressionReference.encode(
-        message.expression,
-        writer.uint32(810).fork()
-      ).ldelim();
+      ExpressionReference.encode(message.expression, writer.uint32(810).fork()).ldelim();
     }
     if (message.model !== undefined) {
       ModelReference.encode(message.model, writer.uint32(818).fork()).ldelim();
@@ -904,10 +790,7 @@ export const SignalProvider = {
           message.table = TableReference.decode(reader, reader.uint32());
           break;
         case 101:
-          message.expression = ExpressionReference.decode(
-            reader,
-            reader.uint32()
-          );
+          message.expression = ExpressionReference.decode(reader, reader.uint32());
           break;
         case 102:
           message.model = ModelReference.decode(reader, reader.uint32());
@@ -925,21 +808,11 @@ export const SignalProvider = {
       uid: isSet(object.uid) ? String(object.uid) : "",
       name: isSet(object.name) ? String(object.name) : "",
       description: isSet(object.description) ? String(object.description) : "",
-      signals: Array.isArray(object?.signals)
-        ? object.signals.map((e: any) => Signal.fromJSON(e))
-        : [],
-      inputs: Array.isArray(object?.inputs)
-        ? object.inputs.map((e: any) => Signal.fromJSON(e))
-        : [],
-      table: isSet(object.table)
-        ? TableReference.fromJSON(object.table)
-        : undefined,
-      expression: isSet(object.expression)
-        ? ExpressionReference.fromJSON(object.expression)
-        : undefined,
-      model: isSet(object.model)
-        ? ModelReference.fromJSON(object.model)
-        : undefined,
+      signals: Array.isArray(object?.signals) ? object.signals.map((e: any) => Signal.fromJSON(e)) : [],
+      inputs: Array.isArray(object?.inputs) ? object.inputs.map((e: any) => Signal.fromJSON(e)) : [],
+      table: isSet(object.table) ? TableReference.fromJSON(object.table) : undefined,
+      expression: isSet(object.expression) ? ExpressionReference.fromJSON(object.expression) : undefined,
+      model: isSet(object.model) ? ModelReference.fromJSON(object.model) : undefined,
     };
   },
 
@@ -947,58 +820,40 @@ export const SignalProvider = {
     const obj: any = {};
     message.uid !== undefined && (obj.uid = message.uid);
     message.name !== undefined && (obj.name = message.name);
-    message.description !== undefined &&
-      (obj.description = message.description);
+    message.description !== undefined && (obj.description = message.description);
     if (message.signals) {
-      obj.signals = message.signals.map((e) =>
-        e ? Signal.toJSON(e) : undefined
-      );
+      obj.signals = message.signals.map((e) => e ? Signal.toJSON(e) : undefined);
     } else {
       obj.signals = [];
     }
     if (message.inputs) {
-      obj.inputs = message.inputs.map((e) =>
-        e ? Signal.toJSON(e) : undefined
-      );
+      obj.inputs = message.inputs.map((e) => e ? Signal.toJSON(e) : undefined);
     } else {
       obj.inputs = [];
     }
-    message.table !== undefined &&
-      (obj.table = message.table
-        ? TableReference.toJSON(message.table)
-        : undefined);
+    message.table !== undefined && (obj.table = message.table ? TableReference.toJSON(message.table) : undefined);
     message.expression !== undefined &&
-      (obj.expression = message.expression
-        ? ExpressionReference.toJSON(message.expression)
-        : undefined);
-    message.model !== undefined &&
-      (obj.model = message.model
-        ? ModelReference.toJSON(message.model)
-        : undefined);
+      (obj.expression = message.expression ? ExpressionReference.toJSON(message.expression) : undefined);
+    message.model !== undefined && (obj.model = message.model ? ModelReference.toJSON(message.model) : undefined);
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<SignalProvider>, I>>(
-    object: I
-  ): SignalProvider {
+  fromPartial<I extends Exact<DeepPartial<SignalProvider>, I>>(object: I): SignalProvider {
     const message = createBaseSignalProvider();
     message.uid = object.uid ?? "";
     message.name = object.name ?? "";
     message.description = object.description ?? "";
     message.signals = object.signals?.map((e) => Signal.fromPartial(e)) || [];
     message.inputs = object.inputs?.map((e) => Signal.fromPartial(e)) || [];
-    message.table =
-      object.table !== undefined && object.table !== null
-        ? TableReference.fromPartial(object.table)
-        : undefined;
-    message.expression =
-      object.expression !== undefined && object.expression !== null
-        ? ExpressionReference.fromPartial(object.expression)
-        : undefined;
-    message.model =
-      object.model !== undefined && object.model !== null
-        ? ModelReference.fromPartial(object.model)
-        : undefined;
+    message.table = (object.table !== undefined && object.table !== null)
+      ? TableReference.fromPartial(object.table)
+      : undefined;
+    message.expression = (object.expression !== undefined && object.expression !== null)
+      ? ExpressionReference.fromPartial(object.expression)
+      : undefined;
+    message.model = (object.model !== undefined && object.model !== null)
+      ? ModelReference.fromPartial(object.model)
+      : undefined;
     return message;
   },
 };
@@ -1008,10 +863,7 @@ function createBaseSignalFrame(): SignalFrame {
 }
 
 export const SignalFrame = {
-  encode(
-    message: SignalFrame,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: SignalFrame, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.uid !== "") {
       writer.uint32(10).string(message.uid);
     }
@@ -1044,9 +896,7 @@ export const SignalFrame = {
           message.description = reader.string();
           break;
         case 4:
-          message.providers.push(
-            SignalProvider.decode(reader, reader.uint32())
-          );
+          message.providers.push(SignalProvider.decode(reader, reader.uint32()));
           break;
         default:
           reader.skipType(tag & 7);
@@ -1061,9 +911,7 @@ export const SignalFrame = {
       uid: isSet(object.uid) ? String(object.uid) : "",
       name: isSet(object.name) ? String(object.name) : "",
       description: isSet(object.description) ? String(object.description) : "",
-      providers: Array.isArray(object?.providers)
-        ? object.providers.map((e: any) => SignalProvider.fromJSON(e))
-        : [],
+      providers: Array.isArray(object?.providers) ? object.providers.map((e: any) => SignalProvider.fromJSON(e)) : [],
     };
   },
 
@@ -1071,57 +919,35 @@ export const SignalFrame = {
     const obj: any = {};
     message.uid !== undefined && (obj.uid = message.uid);
     message.name !== undefined && (obj.name = message.name);
-    message.description !== undefined &&
-      (obj.description = message.description);
+    message.description !== undefined && (obj.description = message.description);
     if (message.providers) {
-      obj.providers = message.providers.map((e) =>
-        e ? SignalProvider.toJSON(e) : undefined
-      );
+      obj.providers = message.providers.map((e) => e ? SignalProvider.toJSON(e) : undefined);
     } else {
       obj.providers = [];
     }
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<SignalFrame>, I>>(
-    object: I
-  ): SignalFrame {
+  fromPartial<I extends Exact<DeepPartial<SignalFrame>, I>>(object: I): SignalFrame {
     const message = createBaseSignalFrame();
     message.uid = object.uid ?? "";
     message.name = object.name ?? "";
     message.description = object.description ?? "";
-    message.providers =
-      object.providers?.map((e) => SignalProvider.fromPartial(e)) || [];
+    message.providers = object.providers?.map((e) => SignalProvider.fromPartial(e)) || [];
     return message;
   },
 };
 
-type Builtin =
-  | Date
-  | Function
-  | Uint8Array
-  | string
-  | number
-  | boolean
-  | undefined;
+type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
-type DeepPartial<T> = T extends Builtin
-  ? T
-  : T extends Array<infer U>
-  ? Array<DeepPartial<U>>
-  : T extends ReadonlyArray<infer U>
-  ? ReadonlyArray<DeepPartial<U>>
-  : T extends {}
-  ? { [K in keyof T]?: DeepPartial<T[K]> }
+type DeepPartial<T> = T extends Builtin ? T
+  : T extends Array<infer U> ? Array<DeepPartial<U>> : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
+  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
 
 type KeysOfUnion<T> = T extends T ? keyof T : never;
-type Exact<P, I extends P> = P extends Builtin
-  ? P
-  : P & { [K in keyof P]: Exact<P[K], I[K]> } & Record<
-        Exclude<keyof I, KeysOfUnion<P>>,
-        never
-      >;
+type Exact<P, I extends P> = P extends Builtin ? P
+  : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
 
 function isObject(value: any): boolean {
   return typeof value === "object" && value !== null;

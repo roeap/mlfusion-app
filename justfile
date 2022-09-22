@@ -1,3 +1,5 @@
+set shell := ["powershell.exe", "-c"]
+
 generate:
     buf generate
 

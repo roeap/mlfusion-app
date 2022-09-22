@@ -1,8 +1,8 @@
 /* eslint-disable */
 import Long from "long";
+import _m0 from "protobufjs/minimal";
 import { AreaSourceReference, Tag } from "./common";
 import { Signal } from "./signals";
-import * as _m0 from "protobufjs/minimal";
 
 /** Metadata associated with an area source */
 export interface AreaSourceMetadata {
@@ -18,7 +18,9 @@ export interface AreaSourceMetadata {
   /** wether the table supports versioning */
   isVersioned: boolean;
   /** source identifier */
-  source: AreaSourceReference | undefined;
+  source:
+    | AreaSourceReference
+    | undefined;
   /** signals provided by area source */
   signals: Signal[];
   /** tags associated with source */
@@ -89,10 +91,7 @@ function createBaseAreaSourceMetadata(): AreaSourceMetadata {
 }
 
 export const AreaSourceMetadata = {
-  encode(
-    message: AreaSourceMetadata,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: AreaSourceMetadata, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.id !== "") {
       writer.uint32(10).string(message.id);
     }
@@ -106,10 +105,7 @@ export const AreaSourceMetadata = {
       writer.uint32(32).bool(message.isVersioned);
     }
     if (message.source !== undefined) {
-      AreaSourceReference.encode(
-        message.source,
-        writer.uint32(42).fork()
-      ).ldelim();
+      AreaSourceReference.encode(message.source, writer.uint32(42).fork()).ldelim();
     }
     for (const v of message.signals) {
       Signal.encode(v!, writer.uint32(50).fork()).ldelim();
@@ -118,10 +114,7 @@ export const AreaSourceMetadata = {
       Tag.encode(v!, writer.uint32(74).fork()).ldelim();
     }
     Object.entries(message.properties).forEach(([key, value]) => {
-      AreaSourceMetadata_PropertiesEntry.encode(
-        { key: key as any, value },
-        writer.uint32(82).fork()
-      ).ldelim();
+      AreaSourceMetadata_PropertiesEntry.encode({ key: key as any, value }, writer.uint32(82).fork()).ldelim();
     });
     return writer;
   },
@@ -155,10 +148,7 @@ export const AreaSourceMetadata = {
           message.tags.push(Tag.decode(reader, reader.uint32()));
           break;
         case 10:
-          const entry10 = AreaSourceMetadata_PropertiesEntry.decode(
-            reader,
-            reader.uint32()
-          );
+          const entry10 = AreaSourceMetadata_PropertiesEntry.decode(reader, reader.uint32());
           if (entry10.value !== undefined) {
             message.properties[entry10.key] = entry10.value;
           }
@@ -176,26 +166,15 @@ export const AreaSourceMetadata = {
       id: isSet(object.id) ? String(object.id) : "",
       name: isSet(object.name) ? String(object.name) : "",
       description: isSet(object.description) ? String(object.description) : "",
-      isVersioned: isSet(object.isVersioned)
-        ? Boolean(object.isVersioned)
-        : false,
-      source: isSet(object.source)
-        ? AreaSourceReference.fromJSON(object.source)
-        : undefined,
-      signals: Array.isArray(object?.signals)
-        ? object.signals.map((e: any) => Signal.fromJSON(e))
-        : [],
-      tags: Array.isArray(object?.tags)
-        ? object.tags.map((e: any) => Tag.fromJSON(e))
-        : [],
+      isVersioned: isSet(object.isVersioned) ? Boolean(object.isVersioned) : false,
+      source: isSet(object.source) ? AreaSourceReference.fromJSON(object.source) : undefined,
+      signals: Array.isArray(object?.signals) ? object.signals.map((e: any) => Signal.fromJSON(e)) : [],
+      tags: Array.isArray(object?.tags) ? object.tags.map((e: any) => Tag.fromJSON(e)) : [],
       properties: isObject(object.properties)
-        ? Object.entries(object.properties).reduce<{ [key: string]: string }>(
-            (acc, [key, value]) => {
-              acc[key] = String(value);
-              return acc;
-            },
-            {}
-          )
+        ? Object.entries(object.properties).reduce<{ [key: string]: string }>((acc, [key, value]) => {
+          acc[key] = String(value);
+          return acc;
+        }, {})
         : {},
     };
   },
@@ -204,23 +183,17 @@ export const AreaSourceMetadata = {
     const obj: any = {};
     message.id !== undefined && (obj.id = message.id);
     message.name !== undefined && (obj.name = message.name);
-    message.description !== undefined &&
-      (obj.description = message.description);
-    message.isVersioned !== undefined &&
-      (obj.isVersioned = message.isVersioned);
+    message.description !== undefined && (obj.description = message.description);
+    message.isVersioned !== undefined && (obj.isVersioned = message.isVersioned);
     message.source !== undefined &&
-      (obj.source = message.source
-        ? AreaSourceReference.toJSON(message.source)
-        : undefined);
+      (obj.source = message.source ? AreaSourceReference.toJSON(message.source) : undefined);
     if (message.signals) {
-      obj.signals = message.signals.map((e) =>
-        e ? Signal.toJSON(e) : undefined
-      );
+      obj.signals = message.signals.map((e) => e ? Signal.toJSON(e) : undefined);
     } else {
       obj.signals = [];
     }
     if (message.tags) {
-      obj.tags = message.tags.map((e) => (e ? Tag.toJSON(e) : undefined));
+      obj.tags = message.tags.map((e) => e ? Tag.toJSON(e) : undefined);
     } else {
       obj.tags = [];
     }
@@ -233,28 +206,26 @@ export const AreaSourceMetadata = {
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<AreaSourceMetadata>, I>>(
-    object: I
-  ): AreaSourceMetadata {
+  fromPartial<I extends Exact<DeepPartial<AreaSourceMetadata>, I>>(object: I): AreaSourceMetadata {
     const message = createBaseAreaSourceMetadata();
     message.id = object.id ?? "";
     message.name = object.name ?? "";
     message.description = object.description ?? "";
     message.isVersioned = object.isVersioned ?? false;
-    message.source =
-      object.source !== undefined && object.source !== null
-        ? AreaSourceReference.fromPartial(object.source)
-        : undefined;
+    message.source = (object.source !== undefined && object.source !== null)
+      ? AreaSourceReference.fromPartial(object.source)
+      : undefined;
     message.signals = object.signals?.map((e) => Signal.fromPartial(e)) || [];
     message.tags = object.tags?.map((e) => Tag.fromPartial(e)) || [];
-    message.properties = Object.entries(object.properties ?? {}).reduce<{
-      [key: string]: string;
-    }>((acc, [key, value]) => {
-      if (value !== undefined) {
-        acc[key] = String(value);
-      }
-      return acc;
-    }, {});
+    message.properties = Object.entries(object.properties ?? {}).reduce<{ [key: string]: string }>(
+      (acc, [key, value]) => {
+        if (value !== undefined) {
+          acc[key] = String(value);
+        }
+        return acc;
+      },
+      {},
+    );
     return message;
   },
 };
@@ -264,10 +235,7 @@ function createBaseAreaSourceMetadata_PropertiesEntry(): AreaSourceMetadata_Prop
 }
 
 export const AreaSourceMetadata_PropertiesEntry = {
-  encode(
-    message: AreaSourceMetadata_PropertiesEntry,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: AreaSourceMetadata_PropertiesEntry, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.key !== "") {
       writer.uint32(10).string(message.key);
     }
@@ -277,10 +245,7 @@ export const AreaSourceMetadata_PropertiesEntry = {
     return writer;
   },
 
-  decode(
-    input: _m0.Reader | Uint8Array,
-    length?: number
-  ): AreaSourceMetadata_PropertiesEntry {
+  decode(input: _m0.Reader | Uint8Array, length?: number): AreaSourceMetadata_PropertiesEntry {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseAreaSourceMetadata_PropertiesEntry();
@@ -302,10 +267,7 @@ export const AreaSourceMetadata_PropertiesEntry = {
   },
 
   fromJSON(object: any): AreaSourceMetadata_PropertiesEntry {
-    return {
-      key: isSet(object.key) ? String(object.key) : "",
-      value: isSet(object.value) ? String(object.value) : "",
-    };
+    return { key: isSet(object.key) ? String(object.key) : "", value: isSet(object.value) ? String(object.value) : "" };
   },
 
   toJSON(message: AreaSourceMetadata_PropertiesEntry): unknown {
@@ -315,9 +277,9 @@ export const AreaSourceMetadata_PropertiesEntry = {
     return obj;
   },
 
-  fromPartial<
-    I extends Exact<DeepPartial<AreaSourceMetadata_PropertiesEntry>, I>
-  >(object: I): AreaSourceMetadata_PropertiesEntry {
+  fromPartial<I extends Exact<DeepPartial<AreaSourceMetadata_PropertiesEntry>, I>>(
+    object: I,
+  ): AreaSourceMetadata_PropertiesEntry {
     const message = createBaseAreaSourceMetadata_PropertiesEntry();
     message.key = object.key ?? "";
     message.value = object.value ?? "";
@@ -330,18 +292,12 @@ function createBaseAreaSourceDetails(): AreaSourceDetails {
 }
 
 export const AreaSourceDetails = {
-  encode(
-    message: AreaSourceDetails,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: AreaSourceDetails, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.id !== "") {
       writer.uint32(10).string(message.id);
     }
     if (message.metadata !== undefined) {
-      AreaSourceMetadata.encode(
-        message.metadata,
-        writer.uint32(18).fork()
-      ).ldelim();
+      AreaSourceMetadata.encode(message.metadata, writer.uint32(18).fork()).ldelim();
     }
     return writer;
   },
@@ -370,9 +326,7 @@ export const AreaSourceDetails = {
   fromJSON(object: any): AreaSourceDetails {
     return {
       id: isSet(object.id) ? String(object.id) : "",
-      metadata: isSet(object.metadata)
-        ? AreaSourceMetadata.fromJSON(object.metadata)
-        : undefined,
+      metadata: isSet(object.metadata) ? AreaSourceMetadata.fromJSON(object.metadata) : undefined,
     };
   },
 
@@ -380,39 +334,26 @@ export const AreaSourceDetails = {
     const obj: any = {};
     message.id !== undefined && (obj.id = message.id);
     message.metadata !== undefined &&
-      (obj.metadata = message.metadata
-        ? AreaSourceMetadata.toJSON(message.metadata)
-        : undefined);
+      (obj.metadata = message.metadata ? AreaSourceMetadata.toJSON(message.metadata) : undefined);
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<AreaSourceDetails>, I>>(
-    object: I
-  ): AreaSourceDetails {
+  fromPartial<I extends Exact<DeepPartial<AreaSourceDetails>, I>>(object: I): AreaSourceDetails {
     const message = createBaseAreaSourceDetails();
     message.id = object.id ?? "";
-    message.metadata =
-      object.metadata !== undefined && object.metadata !== null
-        ? AreaSourceMetadata.fromPartial(object.metadata)
-        : undefined;
+    message.metadata = (object.metadata !== undefined && object.metadata !== null)
+      ? AreaSourceMetadata.fromPartial(object.metadata)
+      : undefined;
     return message;
   },
 };
 
 function createBaseBatchStatistics(): BatchStatistics {
-  return {
-    recordCount: 0,
-    totalByteSize: 0,
-    columnStatistics: [],
-    isExact: false,
-  };
+  return { recordCount: 0, totalByteSize: 0, columnStatistics: [], isExact: false };
 }
 
 export const BatchStatistics = {
-  encode(
-    message: BatchStatistics,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: BatchStatistics, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.recordCount !== 0) {
       writer.uint32(8).int64(message.recordCount);
     }
@@ -442,9 +383,7 @@ export const BatchStatistics = {
           message.totalByteSize = longToNumber(reader.int64() as Long);
           break;
         case 3:
-          message.columnStatistics.push(
-            ColumnStatistics.decode(reader, reader.uint32())
-          );
+          message.columnStatistics.push(ColumnStatistics.decode(reader, reader.uint32()));
           break;
         case 4:
           message.isExact = reader.bool();
@@ -460,9 +399,7 @@ export const BatchStatistics = {
   fromJSON(object: any): BatchStatistics {
     return {
       recordCount: isSet(object.recordCount) ? Number(object.recordCount) : 0,
-      totalByteSize: isSet(object.totalByteSize)
-        ? Number(object.totalByteSize)
-        : 0,
+      totalByteSize: isSet(object.totalByteSize) ? Number(object.totalByteSize) : 0,
       columnStatistics: Array.isArray(object?.columnStatistics)
         ? object.columnStatistics.map((e: any) => ColumnStatistics.fromJSON(e))
         : [],
@@ -472,14 +409,10 @@ export const BatchStatistics = {
 
   toJSON(message: BatchStatistics): unknown {
     const obj: any = {};
-    message.recordCount !== undefined &&
-      (obj.recordCount = Math.round(message.recordCount));
-    message.totalByteSize !== undefined &&
-      (obj.totalByteSize = Math.round(message.totalByteSize));
+    message.recordCount !== undefined && (obj.recordCount = Math.round(message.recordCount));
+    message.totalByteSize !== undefined && (obj.totalByteSize = Math.round(message.totalByteSize));
     if (message.columnStatistics) {
-      obj.columnStatistics = message.columnStatistics.map((e) =>
-        e ? ColumnStatistics.toJSON(e) : undefined
-      );
+      obj.columnStatistics = message.columnStatistics.map((e) => e ? ColumnStatistics.toJSON(e) : undefined);
     } else {
       obj.columnStatistics = [];
     }
@@ -487,15 +420,11 @@ export const BatchStatistics = {
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<BatchStatistics>, I>>(
-    object: I
-  ): BatchStatistics {
+  fromPartial<I extends Exact<DeepPartial<BatchStatistics>, I>>(object: I): BatchStatistics {
     const message = createBaseBatchStatistics();
     message.recordCount = object.recordCount ?? 0;
     message.totalByteSize = object.totalByteSize ?? 0;
-    message.columnStatistics =
-      object.columnStatistics?.map((e) => ColumnStatistics.fromPartial(e)) ||
-      [];
+    message.columnStatistics = object.columnStatistics?.map((e) => ColumnStatistics.fromPartial(e)) || [];
     message.isExact = object.isExact ?? false;
     return message;
   },
@@ -506,10 +435,7 @@ function createBaseColumnStatistics(): ColumnStatistics {
 }
 
 export const ColumnStatistics = {
-  encode(
-    message: ColumnStatistics,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: ColumnStatistics, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.nullCount !== 0) {
       writer.uint32(8).int64(message.nullCount);
     }
@@ -557,26 +483,20 @@ export const ColumnStatistics = {
       nullCount: isSet(object.nullCount) ? Number(object.nullCount) : 0,
       maxValue: isSet(object.maxValue) ? String(object.maxValue) : "",
       minValue: isSet(object.minValue) ? String(object.minValue) : "",
-      distinctCount: isSet(object.distinctCount)
-        ? Number(object.distinctCount)
-        : 0,
+      distinctCount: isSet(object.distinctCount) ? Number(object.distinctCount) : 0,
     };
   },
 
   toJSON(message: ColumnStatistics): unknown {
     const obj: any = {};
-    message.nullCount !== undefined &&
-      (obj.nullCount = Math.round(message.nullCount));
+    message.nullCount !== undefined && (obj.nullCount = Math.round(message.nullCount));
     message.maxValue !== undefined && (obj.maxValue = message.maxValue);
     message.minValue !== undefined && (obj.minValue = message.minValue);
-    message.distinctCount !== undefined &&
-      (obj.distinctCount = Math.round(message.distinctCount));
+    message.distinctCount !== undefined && (obj.distinctCount = Math.round(message.distinctCount));
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<ColumnStatistics>, I>>(
-    object: I
-  ): ColumnStatistics {
+  fromPartial<I extends Exact<DeepPartial<ColumnStatistics>, I>>(object: I): ColumnStatistics {
     const message = createBaseColumnStatistics();
     message.nullCount = object.nullCount ?? 0;
     message.maxValue = object.maxValue ?? "";
@@ -590,39 +510,31 @@ declare var self: any | undefined;
 declare var window: any | undefined;
 declare var global: any | undefined;
 var globalThis: any = (() => {
-  if (typeof globalThis !== "undefined") return globalThis;
-  if (typeof self !== "undefined") return self;
-  if (typeof window !== "undefined") return window;
-  if (typeof global !== "undefined") return global;
+  if (typeof globalThis !== "undefined") {
+    return globalThis;
+  }
+  if (typeof self !== "undefined") {
+    return self;
+  }
+  if (typeof window !== "undefined") {
+    return window;
+  }
+  if (typeof global !== "undefined") {
+    return global;
+  }
   throw "Unable to locate global object";
 })();
 
-type Builtin =
-  | Date
-  | Function
-  | Uint8Array
-  | string
-  | number
-  | boolean
-  | undefined;
+type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
-type DeepPartial<T> = T extends Builtin
-  ? T
-  : T extends Array<infer U>
-  ? Array<DeepPartial<U>>
-  : T extends ReadonlyArray<infer U>
-  ? ReadonlyArray<DeepPartial<U>>
-  : T extends {}
-  ? { [K in keyof T]?: DeepPartial<T[K]> }
+type DeepPartial<T> = T extends Builtin ? T
+  : T extends Array<infer U> ? Array<DeepPartial<U>> : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
+  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
 
 type KeysOfUnion<T> = T extends T ? keyof T : never;
-type Exact<P, I extends P> = P extends Builtin
-  ? P
-  : P & { [K in keyof P]: Exact<P[K], I[K]> } & Record<
-        Exclude<keyof I, KeysOfUnion<P>>,
-        never
-      >;
+type Exact<P, I extends P> = P extends Builtin ? P
+  : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
 
 function longToNumber(long: Long): number {
   if (long.gt(Number.MAX_SAFE_INTEGER)) {

@@ -1,6 +1,6 @@
 /* eslint-disable */
 import Long from "long";
-import * as _m0 from "protobufjs/minimal";
+import _m0 from "protobufjs/minimal";
 
 /** The request that a client provides to a server on handshake. */
 export interface HandshakeRequest {
@@ -23,7 +23,8 @@ export interface BasicAuth {
   password: string;
 }
 
-export interface Empty {}
+export interface Empty {
+}
 
 /**
  * Describes an available action, including both the name used for execution
@@ -97,9 +98,7 @@ export enum FlightDescriptor_DescriptorType {
   UNRECOGNIZED = -1,
 }
 
-export function flightDescriptor_DescriptorTypeFromJSON(
-  object: any
-): FlightDescriptor_DescriptorType {
+export function flightDescriptor_DescriptorTypeFromJSON(object: any): FlightDescriptor_DescriptorType {
   switch (object) {
     case 0:
     case "UNKNOWN":
@@ -117,9 +116,7 @@ export function flightDescriptor_DescriptorTypeFromJSON(
   }
 }
 
-export function flightDescriptor_DescriptorTypeToJSON(
-  object: FlightDescriptor_DescriptorType
-): string {
+export function flightDescriptor_DescriptorTypeToJSON(object: FlightDescriptor_DescriptorType): string {
   switch (object) {
     case FlightDescriptor_DescriptorType.UNKNOWN:
       return "UNKNOWN";
@@ -146,7 +143,9 @@ export interface FlightInfo {
    */
   schema: Uint8Array;
   /** The descriptor associated with this info. */
-  flightDescriptor: FlightDescriptor | undefined;
+  flightDescriptor:
+    | FlightDescriptor
+    | undefined;
   /**
    * A list of endpoints associated with the flight. To consume the
    * whole flight, all endpoints (and hence all Tickets) must be
@@ -167,7 +166,9 @@ export interface FlightInfo {
 /** A particular stream or split associated with a flight. */
 export interface FlightEndpoint {
   /** Token used to retrieve this stream. */
-  ticket: Ticket | undefined;
+  ticket:
+    | Ticket
+    | undefined;
   /**
    * A list of URIs where this ticket can be redeemed via DoGet().
    *
@@ -212,7 +213,9 @@ export interface FlightData {
    * The descriptor of the data. This is only relevant when a client is
    * starting a new DoPut stream.
    */
-  flightDescriptor: FlightDescriptor | undefined;
+  flightDescriptor:
+    | FlightDescriptor
+    | undefined;
   /** Header for message data as described in Message.fbs::Message. */
   dataHeader: Uint8Array;
   /** Application-defined metadata. */
@@ -236,10 +239,7 @@ function createBaseHandshakeRequest(): HandshakeRequest {
 }
 
 export const HandshakeRequest = {
-  encode(
-    message: HandshakeRequest,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: HandshakeRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.protocolVersion !== 0) {
       writer.uint32(8).uint64(message.protocolVersion);
     }
@@ -272,29 +272,20 @@ export const HandshakeRequest = {
 
   fromJSON(object: any): HandshakeRequest {
     return {
-      protocolVersion: isSet(object.protocolVersion)
-        ? Number(object.protocolVersion)
-        : 0,
-      payload: isSet(object.payload)
-        ? bytesFromBase64(object.payload)
-        : new Uint8Array(),
+      protocolVersion: isSet(object.protocolVersion) ? Number(object.protocolVersion) : 0,
+      payload: isSet(object.payload) ? bytesFromBase64(object.payload) : new Uint8Array(),
     };
   },
 
   toJSON(message: HandshakeRequest): unknown {
     const obj: any = {};
-    message.protocolVersion !== undefined &&
-      (obj.protocolVersion = Math.round(message.protocolVersion));
+    message.protocolVersion !== undefined && (obj.protocolVersion = Math.round(message.protocolVersion));
     message.payload !== undefined &&
-      (obj.payload = base64FromBytes(
-        message.payload !== undefined ? message.payload : new Uint8Array()
-      ));
+      (obj.payload = base64FromBytes(message.payload !== undefined ? message.payload : new Uint8Array()));
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<HandshakeRequest>, I>>(
-    object: I
-  ): HandshakeRequest {
+  fromPartial<I extends Exact<DeepPartial<HandshakeRequest>, I>>(object: I): HandshakeRequest {
     const message = createBaseHandshakeRequest();
     message.protocolVersion = object.protocolVersion ?? 0;
     message.payload = object.payload ?? new Uint8Array();
@@ -307,10 +298,7 @@ function createBaseHandshakeResponse(): HandshakeResponse {
 }
 
 export const HandshakeResponse = {
-  encode(
-    message: HandshakeResponse,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: HandshakeResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.protocolVersion !== 0) {
       writer.uint32(8).uint64(message.protocolVersion);
     }
@@ -343,29 +331,20 @@ export const HandshakeResponse = {
 
   fromJSON(object: any): HandshakeResponse {
     return {
-      protocolVersion: isSet(object.protocolVersion)
-        ? Number(object.protocolVersion)
-        : 0,
-      payload: isSet(object.payload)
-        ? bytesFromBase64(object.payload)
-        : new Uint8Array(),
+      protocolVersion: isSet(object.protocolVersion) ? Number(object.protocolVersion) : 0,
+      payload: isSet(object.payload) ? bytesFromBase64(object.payload) : new Uint8Array(),
     };
   },
 
   toJSON(message: HandshakeResponse): unknown {
     const obj: any = {};
-    message.protocolVersion !== undefined &&
-      (obj.protocolVersion = Math.round(message.protocolVersion));
+    message.protocolVersion !== undefined && (obj.protocolVersion = Math.round(message.protocolVersion));
     message.payload !== undefined &&
-      (obj.payload = base64FromBytes(
-        message.payload !== undefined ? message.payload : new Uint8Array()
-      ));
+      (obj.payload = base64FromBytes(message.payload !== undefined ? message.payload : new Uint8Array()));
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<HandshakeResponse>, I>>(
-    object: I
-  ): HandshakeResponse {
+  fromPartial<I extends Exact<DeepPartial<HandshakeResponse>, I>>(object: I): HandshakeResponse {
     const message = createBaseHandshakeResponse();
     message.protocolVersion = object.protocolVersion ?? 0;
     message.payload = object.payload ?? new Uint8Array();
@@ -378,10 +357,7 @@ function createBaseBasicAuth(): BasicAuth {
 }
 
 export const BasicAuth = {
-  encode(
-    message: BasicAuth,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: BasicAuth, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.username !== "") {
       writer.uint32(18).string(message.username);
     }
@@ -426,9 +402,7 @@ export const BasicAuth = {
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<BasicAuth>, I>>(
-    object: I
-  ): BasicAuth {
+  fromPartial<I extends Exact<DeepPartial<BasicAuth>, I>>(object: I): BasicAuth {
     const message = createBaseBasicAuth();
     message.username = object.username ?? "";
     message.password = object.password ?? "";
@@ -480,10 +454,7 @@ function createBaseActionType(): ActionType {
 }
 
 export const ActionType = {
-  encode(
-    message: ActionType,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: ActionType, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.type !== "") {
       writer.uint32(10).string(message.type);
     }
@@ -524,14 +495,11 @@ export const ActionType = {
   toJSON(message: ActionType): unknown {
     const obj: any = {};
     message.type !== undefined && (obj.type = message.type);
-    message.description !== undefined &&
-      (obj.description = message.description);
+    message.description !== undefined && (obj.description = message.description);
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<ActionType>, I>>(
-    object: I
-  ): ActionType {
+  fromPartial<I extends Exact<DeepPartial<ActionType>, I>>(object: I): ActionType {
     const message = createBaseActionType();
     message.type = object.type ?? "";
     message.description = object.description ?? "";
@@ -544,10 +512,7 @@ function createBaseCriteria(): Criteria {
 }
 
 export const Criteria = {
-  encode(
-    message: Criteria,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: Criteria, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.expression.length !== 0) {
       writer.uint32(10).bytes(message.expression);
     }
@@ -573,19 +538,13 @@ export const Criteria = {
   },
 
   fromJSON(object: any): Criteria {
-    return {
-      expression: isSet(object.expression)
-        ? bytesFromBase64(object.expression)
-        : new Uint8Array(),
-    };
+    return { expression: isSet(object.expression) ? bytesFromBase64(object.expression) : new Uint8Array() };
   },
 
   toJSON(message: Criteria): unknown {
     const obj: any = {};
     message.expression !== undefined &&
-      (obj.expression = base64FromBytes(
-        message.expression !== undefined ? message.expression : new Uint8Array()
-      ));
+      (obj.expression = base64FromBytes(message.expression !== undefined ? message.expression : new Uint8Array()));
     return obj;
   },
 
@@ -601,10 +560,7 @@ function createBaseAction(): Action {
 }
 
 export const Action = {
-  encode(
-    message: Action,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: Action, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.type !== "") {
       writer.uint32(10).string(message.type);
     }
@@ -638,9 +594,7 @@ export const Action = {
   fromJSON(object: any): Action {
     return {
       type: isSet(object.type) ? String(object.type) : "",
-      body: isSet(object.body)
-        ? bytesFromBase64(object.body)
-        : new Uint8Array(),
+      body: isSet(object.body) ? bytesFromBase64(object.body) : new Uint8Array(),
     };
   },
 
@@ -648,9 +602,7 @@ export const Action = {
     const obj: any = {};
     message.type !== undefined && (obj.type = message.type);
     message.body !== undefined &&
-      (obj.body = base64FromBytes(
-        message.body !== undefined ? message.body : new Uint8Array()
-      ));
+      (obj.body = base64FromBytes(message.body !== undefined ? message.body : new Uint8Array()));
     return obj;
   },
 
@@ -667,10 +619,7 @@ function createBaseResult(): Result {
 }
 
 export const Result = {
-  encode(
-    message: Result,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: Result, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.body.length !== 0) {
       writer.uint32(10).bytes(message.body);
     }
@@ -696,19 +645,13 @@ export const Result = {
   },
 
   fromJSON(object: any): Result {
-    return {
-      body: isSet(object.body)
-        ? bytesFromBase64(object.body)
-        : new Uint8Array(),
-    };
+    return { body: isSet(object.body) ? bytesFromBase64(object.body) : new Uint8Array() };
   },
 
   toJSON(message: Result): unknown {
     const obj: any = {};
     message.body !== undefined &&
-      (obj.body = base64FromBytes(
-        message.body !== undefined ? message.body : new Uint8Array()
-      ));
+      (obj.body = base64FromBytes(message.body !== undefined ? message.body : new Uint8Array()));
     return obj;
   },
 
@@ -724,10 +667,7 @@ function createBaseSchemaResult(): SchemaResult {
 }
 
 export const SchemaResult = {
-  encode(
-    message: SchemaResult,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: SchemaResult, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.schema.length !== 0) {
       writer.uint32(10).bytes(message.schema);
     }
@@ -753,25 +693,17 @@ export const SchemaResult = {
   },
 
   fromJSON(object: any): SchemaResult {
-    return {
-      schema: isSet(object.schema)
-        ? bytesFromBase64(object.schema)
-        : new Uint8Array(),
-    };
+    return { schema: isSet(object.schema) ? bytesFromBase64(object.schema) : new Uint8Array() };
   },
 
   toJSON(message: SchemaResult): unknown {
     const obj: any = {};
     message.schema !== undefined &&
-      (obj.schema = base64FromBytes(
-        message.schema !== undefined ? message.schema : new Uint8Array()
-      ));
+      (obj.schema = base64FromBytes(message.schema !== undefined ? message.schema : new Uint8Array()));
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<SchemaResult>, I>>(
-    object: I
-  ): SchemaResult {
+  fromPartial<I extends Exact<DeepPartial<SchemaResult>, I>>(object: I): SchemaResult {
     const message = createBaseSchemaResult();
     message.schema = object.schema ?? new Uint8Array();
     return message;
@@ -783,10 +715,7 @@ function createBaseFlightDescriptor(): FlightDescriptor {
 }
 
 export const FlightDescriptor = {
-  encode(
-    message: FlightDescriptor,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: FlightDescriptor, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.type !== 0) {
       writer.uint32(8).int32(message.type);
     }
@@ -825,24 +754,17 @@ export const FlightDescriptor = {
 
   fromJSON(object: any): FlightDescriptor {
     return {
-      type: isSet(object.type)
-        ? flightDescriptor_DescriptorTypeFromJSON(object.type)
-        : 0,
+      type: isSet(object.type) ? flightDescriptor_DescriptorTypeFromJSON(object.type) : 0,
       cmd: isSet(object.cmd) ? bytesFromBase64(object.cmd) : new Uint8Array(),
-      path: Array.isArray(object?.path)
-        ? object.path.map((e: any) => String(e))
-        : [],
+      path: Array.isArray(object?.path) ? object.path.map((e: any) => String(e)) : [],
     };
   },
 
   toJSON(message: FlightDescriptor): unknown {
     const obj: any = {};
-    message.type !== undefined &&
-      (obj.type = flightDescriptor_DescriptorTypeToJSON(message.type));
+    message.type !== undefined && (obj.type = flightDescriptor_DescriptorTypeToJSON(message.type));
     message.cmd !== undefined &&
-      (obj.cmd = base64FromBytes(
-        message.cmd !== undefined ? message.cmd : new Uint8Array()
-      ));
+      (obj.cmd = base64FromBytes(message.cmd !== undefined ? message.cmd : new Uint8Array()));
     if (message.path) {
       obj.path = message.path.map((e) => e);
     } else {
@@ -851,9 +773,7 @@ export const FlightDescriptor = {
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<FlightDescriptor>, I>>(
-    object: I
-  ): FlightDescriptor {
+  fromPartial<I extends Exact<DeepPartial<FlightDescriptor>, I>>(object: I): FlightDescriptor {
     const message = createBaseFlightDescriptor();
     message.type = object.type ?? 0;
     message.cmd = object.cmd ?? new Uint8Array();
@@ -863,28 +783,16 @@ export const FlightDescriptor = {
 };
 
 function createBaseFlightInfo(): FlightInfo {
-  return {
-    schema: new Uint8Array(),
-    flightDescriptor: undefined,
-    endpoint: [],
-    totalRecords: 0,
-    totalBytes: 0,
-  };
+  return { schema: new Uint8Array(), flightDescriptor: undefined, endpoint: [], totalRecords: 0, totalBytes: 0 };
 }
 
 export const FlightInfo = {
-  encode(
-    message: FlightInfo,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: FlightInfo, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.schema.length !== 0) {
       writer.uint32(10).bytes(message.schema);
     }
     if (message.flightDescriptor !== undefined) {
-      FlightDescriptor.encode(
-        message.flightDescriptor,
-        writer.uint32(18).fork()
-      ).ldelim();
+      FlightDescriptor.encode(message.flightDescriptor, writer.uint32(18).fork()).ldelim();
     }
     for (const v of message.endpoint) {
       FlightEndpoint.encode(v!, writer.uint32(26).fork()).ldelim();
@@ -909,10 +817,7 @@ export const FlightInfo = {
           message.schema = reader.bytes();
           break;
         case 2:
-          message.flightDescriptor = FlightDescriptor.decode(
-            reader,
-            reader.uint32()
-          );
+          message.flightDescriptor = FlightDescriptor.decode(reader, reader.uint32());
           break;
         case 3:
           message.endpoint.push(FlightEndpoint.decode(reader, reader.uint32()));
@@ -933,18 +838,10 @@ export const FlightInfo = {
 
   fromJSON(object: any): FlightInfo {
     return {
-      schema: isSet(object.schema)
-        ? bytesFromBase64(object.schema)
-        : new Uint8Array(),
-      flightDescriptor: isSet(object.flightDescriptor)
-        ? FlightDescriptor.fromJSON(object.flightDescriptor)
-        : undefined,
-      endpoint: Array.isArray(object?.endpoint)
-        ? object.endpoint.map((e: any) => FlightEndpoint.fromJSON(e))
-        : [],
-      totalRecords: isSet(object.totalRecords)
-        ? Number(object.totalRecords)
-        : 0,
+      schema: isSet(object.schema) ? bytesFromBase64(object.schema) : new Uint8Array(),
+      flightDescriptor: isSet(object.flightDescriptor) ? FlightDescriptor.fromJSON(object.flightDescriptor) : undefined,
+      endpoint: Array.isArray(object?.endpoint) ? object.endpoint.map((e: any) => FlightEndpoint.fromJSON(e)) : [],
+      totalRecords: isSet(object.totalRecords) ? Number(object.totalRecords) : 0,
       totalBytes: isSet(object.totalBytes) ? Number(object.totalBytes) : 0,
     };
   },
@@ -952,38 +849,26 @@ export const FlightInfo = {
   toJSON(message: FlightInfo): unknown {
     const obj: any = {};
     message.schema !== undefined &&
-      (obj.schema = base64FromBytes(
-        message.schema !== undefined ? message.schema : new Uint8Array()
-      ));
+      (obj.schema = base64FromBytes(message.schema !== undefined ? message.schema : new Uint8Array()));
     message.flightDescriptor !== undefined &&
-      (obj.flightDescriptor = message.flightDescriptor
-        ? FlightDescriptor.toJSON(message.flightDescriptor)
-        : undefined);
+      (obj.flightDescriptor = message.flightDescriptor ? FlightDescriptor.toJSON(message.flightDescriptor) : undefined);
     if (message.endpoint) {
-      obj.endpoint = message.endpoint.map((e) =>
-        e ? FlightEndpoint.toJSON(e) : undefined
-      );
+      obj.endpoint = message.endpoint.map((e) => e ? FlightEndpoint.toJSON(e) : undefined);
     } else {
       obj.endpoint = [];
     }
-    message.totalRecords !== undefined &&
-      (obj.totalRecords = Math.round(message.totalRecords));
-    message.totalBytes !== undefined &&
-      (obj.totalBytes = Math.round(message.totalBytes));
+    message.totalRecords !== undefined && (obj.totalRecords = Math.round(message.totalRecords));
+    message.totalBytes !== undefined && (obj.totalBytes = Math.round(message.totalBytes));
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<FlightInfo>, I>>(
-    object: I
-  ): FlightInfo {
+  fromPartial<I extends Exact<DeepPartial<FlightInfo>, I>>(object: I): FlightInfo {
     const message = createBaseFlightInfo();
     message.schema = object.schema ?? new Uint8Array();
-    message.flightDescriptor =
-      object.flightDescriptor !== undefined && object.flightDescriptor !== null
-        ? FlightDescriptor.fromPartial(object.flightDescriptor)
-        : undefined;
-    message.endpoint =
-      object.endpoint?.map((e) => FlightEndpoint.fromPartial(e)) || [];
+    message.flightDescriptor = (object.flightDescriptor !== undefined && object.flightDescriptor !== null)
+      ? FlightDescriptor.fromPartial(object.flightDescriptor)
+      : undefined;
+    message.endpoint = object.endpoint?.map((e) => FlightEndpoint.fromPartial(e)) || [];
     message.totalRecords = object.totalRecords ?? 0;
     message.totalBytes = object.totalBytes ?? 0;
     return message;
@@ -995,10 +880,7 @@ function createBaseFlightEndpoint(): FlightEndpoint {
 }
 
 export const FlightEndpoint = {
-  encode(
-    message: FlightEndpoint,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: FlightEndpoint, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.ticket !== undefined) {
       Ticket.encode(message.ticket, writer.uint32(10).fork()).ldelim();
     }
@@ -1032,36 +914,27 @@ export const FlightEndpoint = {
   fromJSON(object: any): FlightEndpoint {
     return {
       ticket: isSet(object.ticket) ? Ticket.fromJSON(object.ticket) : undefined,
-      location: Array.isArray(object?.location)
-        ? object.location.map((e: any) => Location.fromJSON(e))
-        : [],
+      location: Array.isArray(object?.location) ? object.location.map((e: any) => Location.fromJSON(e)) : [],
     };
   },
 
   toJSON(message: FlightEndpoint): unknown {
     const obj: any = {};
-    message.ticket !== undefined &&
-      (obj.ticket = message.ticket ? Ticket.toJSON(message.ticket) : undefined);
+    message.ticket !== undefined && (obj.ticket = message.ticket ? Ticket.toJSON(message.ticket) : undefined);
     if (message.location) {
-      obj.location = message.location.map((e) =>
-        e ? Location.toJSON(e) : undefined
-      );
+      obj.location = message.location.map((e) => e ? Location.toJSON(e) : undefined);
     } else {
       obj.location = [];
     }
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<FlightEndpoint>, I>>(
-    object: I
-  ): FlightEndpoint {
+  fromPartial<I extends Exact<DeepPartial<FlightEndpoint>, I>>(object: I): FlightEndpoint {
     const message = createBaseFlightEndpoint();
-    message.ticket =
-      object.ticket !== undefined && object.ticket !== null
-        ? Ticket.fromPartial(object.ticket)
-        : undefined;
-    message.location =
-      object.location?.map((e) => Location.fromPartial(e)) || [];
+    message.ticket = (object.ticket !== undefined && object.ticket !== null)
+      ? Ticket.fromPartial(object.ticket)
+      : undefined;
+    message.location = object.location?.map((e) => Location.fromPartial(e)) || [];
     return message;
   },
 };
@@ -1071,10 +944,7 @@ function createBaseLocation(): Location {
 }
 
 export const Location = {
-  encode(
-    message: Location,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: Location, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.uri !== "") {
       writer.uint32(10).string(message.uri);
     }
@@ -1100,9 +970,7 @@ export const Location = {
   },
 
   fromJSON(object: any): Location {
-    return {
-      uri: isSet(object.uri) ? String(object.uri) : "",
-    };
+    return { uri: isSet(object.uri) ? String(object.uri) : "" };
   },
 
   toJSON(message: Location): unknown {
@@ -1123,10 +991,7 @@ function createBaseTicket(): Ticket {
 }
 
 export const Ticket = {
-  encode(
-    message: Ticket,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: Ticket, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.ticket.length !== 0) {
       writer.uint32(10).bytes(message.ticket);
     }
@@ -1152,19 +1017,13 @@ export const Ticket = {
   },
 
   fromJSON(object: any): Ticket {
-    return {
-      ticket: isSet(object.ticket)
-        ? bytesFromBase64(object.ticket)
-        : new Uint8Array(),
-    };
+    return { ticket: isSet(object.ticket) ? bytesFromBase64(object.ticket) : new Uint8Array() };
   },
 
   toJSON(message: Ticket): unknown {
     const obj: any = {};
     message.ticket !== undefined &&
-      (obj.ticket = base64FromBytes(
-        message.ticket !== undefined ? message.ticket : new Uint8Array()
-      ));
+      (obj.ticket = base64FromBytes(message.ticket !== undefined ? message.ticket : new Uint8Array()));
     return obj;
   },
 
@@ -1185,15 +1044,9 @@ function createBaseFlightData(): FlightData {
 }
 
 export const FlightData = {
-  encode(
-    message: FlightData,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: FlightData, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.flightDescriptor !== undefined) {
-      FlightDescriptor.encode(
-        message.flightDescriptor,
-        writer.uint32(10).fork()
-      ).ldelim();
+      FlightDescriptor.encode(message.flightDescriptor, writer.uint32(10).fork()).ldelim();
     }
     if (message.dataHeader.length !== 0) {
       writer.uint32(18).bytes(message.dataHeader);
@@ -1215,10 +1068,7 @@ export const FlightData = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.flightDescriptor = FlightDescriptor.decode(
-            reader,
-            reader.uint32()
-          );
+          message.flightDescriptor = FlightDescriptor.decode(reader, reader.uint32());
           break;
         case 2:
           message.dataHeader = reader.bytes();
@@ -1239,52 +1089,31 @@ export const FlightData = {
 
   fromJSON(object: any): FlightData {
     return {
-      flightDescriptor: isSet(object.flightDescriptor)
-        ? FlightDescriptor.fromJSON(object.flightDescriptor)
-        : undefined,
-      dataHeader: isSet(object.dataHeader)
-        ? bytesFromBase64(object.dataHeader)
-        : new Uint8Array(),
-      appMetadata: isSet(object.appMetadata)
-        ? bytesFromBase64(object.appMetadata)
-        : new Uint8Array(),
-      dataBody: isSet(object.dataBody)
-        ? bytesFromBase64(object.dataBody)
-        : new Uint8Array(),
+      flightDescriptor: isSet(object.flightDescriptor) ? FlightDescriptor.fromJSON(object.flightDescriptor) : undefined,
+      dataHeader: isSet(object.dataHeader) ? bytesFromBase64(object.dataHeader) : new Uint8Array(),
+      appMetadata: isSet(object.appMetadata) ? bytesFromBase64(object.appMetadata) : new Uint8Array(),
+      dataBody: isSet(object.dataBody) ? bytesFromBase64(object.dataBody) : new Uint8Array(),
     };
   },
 
   toJSON(message: FlightData): unknown {
     const obj: any = {};
     message.flightDescriptor !== undefined &&
-      (obj.flightDescriptor = message.flightDescriptor
-        ? FlightDescriptor.toJSON(message.flightDescriptor)
-        : undefined);
+      (obj.flightDescriptor = message.flightDescriptor ? FlightDescriptor.toJSON(message.flightDescriptor) : undefined);
     message.dataHeader !== undefined &&
-      (obj.dataHeader = base64FromBytes(
-        message.dataHeader !== undefined ? message.dataHeader : new Uint8Array()
-      ));
+      (obj.dataHeader = base64FromBytes(message.dataHeader !== undefined ? message.dataHeader : new Uint8Array()));
     message.appMetadata !== undefined &&
-      (obj.appMetadata = base64FromBytes(
-        message.appMetadata !== undefined
-          ? message.appMetadata
-          : new Uint8Array()
-      ));
+      (obj.appMetadata = base64FromBytes(message.appMetadata !== undefined ? message.appMetadata : new Uint8Array()));
     message.dataBody !== undefined &&
-      (obj.dataBody = base64FromBytes(
-        message.dataBody !== undefined ? message.dataBody : new Uint8Array()
-      ));
+      (obj.dataBody = base64FromBytes(message.dataBody !== undefined ? message.dataBody : new Uint8Array()));
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<FlightData>, I>>(
-    object: I
-  ): FlightData {
+  fromPartial<I extends Exact<DeepPartial<FlightData>, I>>(object: I): FlightData {
     const message = createBaseFlightData();
-    message.flightDescriptor =
-      object.flightDescriptor !== undefined && object.flightDescriptor !== null
-        ? FlightDescriptor.fromPartial(object.flightDescriptor)
-        : undefined;
+    message.flightDescriptor = (object.flightDescriptor !== undefined && object.flightDescriptor !== null)
+      ? FlightDescriptor.fromPartial(object.flightDescriptor)
+      : undefined;
     message.dataHeader = object.dataHeader ?? new Uint8Array();
     message.appMetadata = object.appMetadata ?? new Uint8Array();
     message.dataBody = object.dataBody ?? new Uint8Array();
@@ -1297,10 +1126,7 @@ function createBasePutResult(): PutResult {
 }
 
 export const PutResult = {
-  encode(
-    message: PutResult,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: PutResult, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.appMetadata.length !== 0) {
       writer.uint32(10).bytes(message.appMetadata);
     }
@@ -1326,27 +1152,17 @@ export const PutResult = {
   },
 
   fromJSON(object: any): PutResult {
-    return {
-      appMetadata: isSet(object.appMetadata)
-        ? bytesFromBase64(object.appMetadata)
-        : new Uint8Array(),
-    };
+    return { appMetadata: isSet(object.appMetadata) ? bytesFromBase64(object.appMetadata) : new Uint8Array() };
   },
 
   toJSON(message: PutResult): unknown {
     const obj: any = {};
     message.appMetadata !== undefined &&
-      (obj.appMetadata = base64FromBytes(
-        message.appMetadata !== undefined
-          ? message.appMetadata
-          : new Uint8Array()
-      ));
+      (obj.appMetadata = base64FromBytes(message.appMetadata !== undefined ? message.appMetadata : new Uint8Array()));
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<PutResult>, I>>(
-    object: I
-  ): PutResult {
+  fromPartial<I extends Exact<DeepPartial<PutResult>, I>>(object: I): PutResult {
     const message = createBasePutResult();
     message.appMetadata = object.appMetadata ?? new Uint8Array();
     return message;
@@ -1357,62 +1173,56 @@ declare var self: any | undefined;
 declare var window: any | undefined;
 declare var global: any | undefined;
 var globalThis: any = (() => {
-  if (typeof globalThis !== "undefined") return globalThis;
-  if (typeof self !== "undefined") return self;
-  if (typeof window !== "undefined") return window;
-  if (typeof global !== "undefined") return global;
+  if (typeof globalThis !== "undefined") {
+    return globalThis;
+  }
+  if (typeof self !== "undefined") {
+    return self;
+  }
+  if (typeof window !== "undefined") {
+    return window;
+  }
+  if (typeof global !== "undefined") {
+    return global;
+  }
   throw "Unable to locate global object";
 })();
 
-const atob: (b64: string) => string =
-  globalThis.atob ||
-  ((b64) => globalThis.Buffer.from(b64, "base64").toString("binary"));
 function bytesFromBase64(b64: string): Uint8Array {
-  const bin = atob(b64);
-  const arr = new Uint8Array(bin.length);
-  for (let i = 0; i < bin.length; ++i) {
-    arr[i] = bin.charCodeAt(i);
+  if (globalThis.Buffer) {
+    return Uint8Array.from(globalThis.Buffer.from(b64, "base64"));
+  } else {
+    const bin = globalThis.atob(b64);
+    const arr = new Uint8Array(bin.length);
+    for (let i = 0; i < bin.length; ++i) {
+      arr[i] = bin.charCodeAt(i);
+    }
+    return arr;
   }
-  return arr;
 }
 
-const btoa: (bin: string) => string =
-  globalThis.btoa ||
-  ((bin) => globalThis.Buffer.from(bin, "binary").toString("base64"));
 function base64FromBytes(arr: Uint8Array): string {
-  const bin: string[] = [];
-  arr.forEach((byte) => {
-    bin.push(String.fromCharCode(byte));
-  });
-  return btoa(bin.join(""));
+  if (globalThis.Buffer) {
+    return globalThis.Buffer.from(arr).toString("base64");
+  } else {
+    const bin: string[] = [];
+    arr.forEach((byte) => {
+      bin.push(String.fromCharCode(byte));
+    });
+    return globalThis.btoa(bin.join(""));
+  }
 }
 
-type Builtin =
-  | Date
-  | Function
-  | Uint8Array
-  | string
-  | number
-  | boolean
-  | undefined;
+type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
-type DeepPartial<T> = T extends Builtin
-  ? T
-  : T extends Array<infer U>
-  ? Array<DeepPartial<U>>
-  : T extends ReadonlyArray<infer U>
-  ? ReadonlyArray<DeepPartial<U>>
-  : T extends {}
-  ? { [K in keyof T]?: DeepPartial<T[K]> }
+type DeepPartial<T> = T extends Builtin ? T
+  : T extends Array<infer U> ? Array<DeepPartial<U>> : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
+  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
 
 type KeysOfUnion<T> = T extends T ? keyof T : never;
-type Exact<P, I extends P> = P extends Builtin
-  ? P
-  : P & { [K in keyof P]: Exact<P[K], I[K]> } & Record<
-        Exclude<keyof I, KeysOfUnion<P>>,
-        never
-      >;
+type Exact<P, I extends P> = P extends Builtin ? P
+  : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
 
 function longToNumber(long: Long): number {
   if (long.gt(Number.MAX_SAFE_INTEGER)) {

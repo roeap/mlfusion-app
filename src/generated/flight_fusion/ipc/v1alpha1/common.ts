@@ -1,5 +1,5 @@
 /* eslint-disable */
-import * as _m0 from "protobufjs/minimal";
+import _m0 from "protobufjs/minimal";
 
 /** File format for a file stroed on disk */
 export enum FileFormat {
@@ -139,10 +139,7 @@ function createBaseFileReference(): FileReference {
 }
 
 export const FileReference = {
-  encode(
-    message: FileReference,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: FileReference, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.path !== "") {
       writer.uint32(10).string(message.path);
     }
@@ -183,14 +180,11 @@ export const FileReference = {
   toJSON(message: FileReference): unknown {
     const obj: any = {};
     message.path !== undefined && (obj.path = message.path);
-    message.format !== undefined &&
-      (obj.format = fileFormatToJSON(message.format));
+    message.format !== undefined && (obj.format = fileFormatToJSON(message.format));
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<FileReference>, I>>(
-    object: I
-  ): FileReference {
+  fromPartial<I extends Exact<DeepPartial<FileReference>, I>>(object: I): FileReference {
     const message = createBaseFileReference();
     message.path = object.path ?? "";
     message.format = object.format ?? 0;
@@ -203,10 +197,7 @@ function createBaseTableReference(): TableReference {
 }
 
 export const TableReference = {
-  encode(
-    message: TableReference,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: TableReference, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.file !== undefined) {
       FileReference.encode(message.file, writer.uint32(26).fork()).ldelim();
     }
@@ -232,30 +223,20 @@ export const TableReference = {
   },
 
   fromJSON(object: any): TableReference {
-    return {
-      file: isSet(object.file)
-        ? FileReference.fromJSON(object.file)
-        : undefined,
-    };
+    return { file: isSet(object.file) ? FileReference.fromJSON(object.file) : undefined };
   },
 
   toJSON(message: TableReference): unknown {
     const obj: any = {};
-    message.file !== undefined &&
-      (obj.file = message.file
-        ? FileReference.toJSON(message.file)
-        : undefined);
+    message.file !== undefined && (obj.file = message.file ? FileReference.toJSON(message.file) : undefined);
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<TableReference>, I>>(
-    object: I
-  ): TableReference {
+  fromPartial<I extends Exact<DeepPartial<TableReference>, I>>(object: I): TableReference {
     const message = createBaseTableReference();
-    message.file =
-      object.file !== undefined && object.file !== null
-        ? FileReference.fromPartial(object.file)
-        : undefined;
+    message.file = (object.file !== undefined && object.file !== null)
+      ? FileReference.fromPartial(object.file)
+      : undefined;
     return message;
   },
 };
@@ -265,10 +246,7 @@ function createBaseAreaTableLocation(): AreaTableLocation {
 }
 
 export const AreaTableLocation = {
-  encode(
-    message: AreaTableLocation,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: AreaTableLocation, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.name !== "") {
       writer.uint32(10).string(message.name);
     }
@@ -302,9 +280,7 @@ export const AreaTableLocation = {
   fromJSON(object: any): AreaTableLocation {
     return {
       name: isSet(object.name) ? String(object.name) : "",
-      areas: Array.isArray(object?.areas)
-        ? object.areas.map((e: any) => String(e))
-        : [],
+      areas: Array.isArray(object?.areas) ? object.areas.map((e: any) => String(e)) : [],
     };
   },
 
@@ -319,9 +295,7 @@ export const AreaTableLocation = {
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<AreaTableLocation>, I>>(
-    object: I
-  ): AreaTableLocation {
+  fromPartial<I extends Exact<DeepPartial<AreaTableLocation>, I>>(object: I): AreaTableLocation {
     const message = createBaseAreaTableLocation();
     message.name = object.name ?? "";
     message.areas = object.areas?.map((e) => e) || [];
@@ -334,10 +308,7 @@ function createBaseAreaTableId(): AreaTableId {
 }
 
 export const AreaTableId = {
-  encode(
-    message: AreaTableId,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: AreaTableId, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.id !== "") {
       writer.uint32(10).string(message.id);
     }
@@ -363,9 +334,7 @@ export const AreaTableId = {
   },
 
   fromJSON(object: any): AreaTableId {
-    return {
-      id: isSet(object.id) ? String(object.id) : "",
-    };
+    return { id: isSet(object.id) ? String(object.id) : "" };
   },
 
   toJSON(message: AreaTableId): unknown {
@@ -374,9 +343,7 @@ export const AreaTableId = {
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<AreaTableId>, I>>(
-    object: I
-  ): AreaTableId {
+  fromPartial<I extends Exact<DeepPartial<AreaTableId>, I>>(object: I): AreaTableId {
     const message = createBaseAreaTableId();
     message.id = object.id ?? "";
     return message;
@@ -388,10 +355,7 @@ function createBaseAreaTableUri(): AreaTableUri {
 }
 
 export const AreaTableUri = {
-  encode(
-    message: AreaTableUri,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: AreaTableUri, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.uri !== "") {
       writer.uint32(10).string(message.uri);
     }
@@ -417,9 +381,7 @@ export const AreaTableUri = {
   },
 
   fromJSON(object: any): AreaTableUri {
-    return {
-      uri: isSet(object.uri) ? String(object.uri) : "",
-    };
+    return { uri: isSet(object.uri) ? String(object.uri) : "" };
   },
 
   toJSON(message: AreaTableUri): unknown {
@@ -428,9 +390,7 @@ export const AreaTableUri = {
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<AreaTableUri>, I>>(
-    object: I
-  ): AreaTableUri {
+  fromPartial<I extends Exact<DeepPartial<AreaTableUri>, I>>(object: I): AreaTableUri {
     const message = createBaseAreaTableUri();
     message.uri = object.uri ?? "";
     return message;
@@ -442,15 +402,9 @@ function createBaseAreaSourceReference(): AreaSourceReference {
 }
 
 export const AreaSourceReference = {
-  encode(
-    message: AreaSourceReference,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: AreaSourceReference, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.location !== undefined) {
-      AreaTableLocation.encode(
-        message.location,
-        writer.uint32(10).fork()
-      ).ldelim();
+      AreaTableLocation.encode(message.location, writer.uint32(10).fork()).ldelim();
     }
     if (message.id !== undefined) {
       AreaTableId.encode(message.id, writer.uint32(18).fork()).ldelim();
@@ -487,9 +441,7 @@ export const AreaSourceReference = {
 
   fromJSON(object: any): AreaSourceReference {
     return {
-      location: isSet(object.location)
-        ? AreaTableLocation.fromJSON(object.location)
-        : undefined,
+      location: isSet(object.location) ? AreaTableLocation.fromJSON(object.location) : undefined,
       id: isSet(object.id) ? AreaTableId.fromJSON(object.id) : undefined,
       uri: isSet(object.uri) ? AreaTableUri.fromJSON(object.uri) : undefined,
     };
@@ -498,32 +450,19 @@ export const AreaSourceReference = {
   toJSON(message: AreaSourceReference): unknown {
     const obj: any = {};
     message.location !== undefined &&
-      (obj.location = message.location
-        ? AreaTableLocation.toJSON(message.location)
-        : undefined);
-    message.id !== undefined &&
-      (obj.id = message.id ? AreaTableId.toJSON(message.id) : undefined);
-    message.uri !== undefined &&
-      (obj.uri = message.uri ? AreaTableUri.toJSON(message.uri) : undefined);
+      (obj.location = message.location ? AreaTableLocation.toJSON(message.location) : undefined);
+    message.id !== undefined && (obj.id = message.id ? AreaTableId.toJSON(message.id) : undefined);
+    message.uri !== undefined && (obj.uri = message.uri ? AreaTableUri.toJSON(message.uri) : undefined);
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<AreaSourceReference>, I>>(
-    object: I
-  ): AreaSourceReference {
+  fromPartial<I extends Exact<DeepPartial<AreaSourceReference>, I>>(object: I): AreaSourceReference {
     const message = createBaseAreaSourceReference();
-    message.location =
-      object.location !== undefined && object.location !== null
-        ? AreaTableLocation.fromPartial(object.location)
-        : undefined;
-    message.id =
-      object.id !== undefined && object.id !== null
-        ? AreaTableId.fromPartial(object.id)
-        : undefined;
-    message.uri =
-      object.uri !== undefined && object.uri !== null
-        ? AreaTableUri.fromPartial(object.uri)
-        : undefined;
+    message.location = (object.location !== undefined && object.location !== null)
+      ? AreaTableLocation.fromPartial(object.location)
+      : undefined;
+    message.id = (object.id !== undefined && object.id !== null) ? AreaTableId.fromPartial(object.id) : undefined;
+    message.uri = (object.uri !== undefined && object.uri !== null) ? AreaTableUri.fromPartial(object.uri) : undefined;
     return message;
   },
 };
@@ -533,10 +472,7 @@ function createBaseSourceCollection(): SourceCollection {
 }
 
 export const SourceCollection = {
-  encode(
-    message: SourceCollection,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: SourceCollection, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     for (const v of message.sources) {
       AreaSourceReference.encode(v!, writer.uint32(10).fork()).ldelim();
     }
@@ -551,9 +487,7 @@ export const SourceCollection = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.sources.push(
-            AreaSourceReference.decode(reader, reader.uint32())
-          );
+          message.sources.push(AreaSourceReference.decode(reader, reader.uint32()));
           break;
         default:
           reader.skipType(tag & 7);
@@ -565,30 +499,23 @@ export const SourceCollection = {
 
   fromJSON(object: any): SourceCollection {
     return {
-      sources: Array.isArray(object?.sources)
-        ? object.sources.map((e: any) => AreaSourceReference.fromJSON(e))
-        : [],
+      sources: Array.isArray(object?.sources) ? object.sources.map((e: any) => AreaSourceReference.fromJSON(e)) : [],
     };
   },
 
   toJSON(message: SourceCollection): unknown {
     const obj: any = {};
     if (message.sources) {
-      obj.sources = message.sources.map((e) =>
-        e ? AreaSourceReference.toJSON(e) : undefined
-      );
+      obj.sources = message.sources.map((e) => e ? AreaSourceReference.toJSON(e) : undefined);
     } else {
       obj.sources = [];
     }
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<SourceCollection>, I>>(
-    object: I
-  ): SourceCollection {
+  fromPartial<I extends Exact<DeepPartial<SourceCollection>, I>>(object: I): SourceCollection {
     const message = createBaseSourceCollection();
-    message.sources =
-      object.sources?.map((e) => AreaSourceReference.fromPartial(e)) || [];
+    message.sources = object.sources?.map((e) => AreaSourceReference.fromPartial(e)) || [];
     return message;
   },
 };
@@ -630,10 +557,7 @@ export const Tag = {
   },
 
   fromJSON(object: any): Tag {
-    return {
-      key: isSet(object.key) ? String(object.key) : "",
-      value: isSet(object.value) ? String(object.value) : "",
-    };
+    return { key: isSet(object.key) ? String(object.key) : "", value: isSet(object.value) ? String(object.value) : "" };
   },
 
   toJSON(message: Tag): unknown {
@@ -651,32 +575,16 @@ export const Tag = {
   },
 };
 
-type Builtin =
-  | Date
-  | Function
-  | Uint8Array
-  | string
-  | number
-  | boolean
-  | undefined;
+type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
-type DeepPartial<T> = T extends Builtin
-  ? T
-  : T extends Array<infer U>
-  ? Array<DeepPartial<U>>
-  : T extends ReadonlyArray<infer U>
-  ? ReadonlyArray<DeepPartial<U>>
-  : T extends {}
-  ? { [K in keyof T]?: DeepPartial<T[K]> }
+type DeepPartial<T> = T extends Builtin ? T
+  : T extends Array<infer U> ? Array<DeepPartial<U>> : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
+  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
 
 type KeysOfUnion<T> = T extends T ? keyof T : never;
-type Exact<P, I extends P> = P extends Builtin
-  ? P
-  : P & { [K in keyof P]: Exact<P[K], I[K]> } & Record<
-        Exclude<keyof I, KeysOfUnion<P>>,
-        never
-      >;
+type Exact<P, I extends P> = P extends Builtin ? P
+  : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
 
 function isSet(value: any): boolean {
   return value !== null && value !== undefined;

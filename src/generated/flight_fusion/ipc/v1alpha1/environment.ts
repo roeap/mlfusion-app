@@ -1,5 +1,5 @@
 /* eslint-disable */
-import * as _m0 from "protobufjs/minimal";
+import _m0 from "protobufjs/minimal";
 
 export interface ServiceConnection {
   host: string;
@@ -20,10 +20,7 @@ function createBaseServiceConnection(): ServiceConnection {
 }
 
 export const ServiceConnection = {
-  encode(
-    message: ServiceConnection,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: ServiceConnection, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.host !== "") {
       writer.uint32(10).string(message.host);
     }
@@ -55,10 +52,7 @@ export const ServiceConnection = {
   },
 
   fromJSON(object: any): ServiceConnection {
-    return {
-      host: isSet(object.host) ? String(object.host) : "",
-      port: isSet(object.port) ? Number(object.port) : 0,
-    };
+    return { host: isSet(object.host) ? String(object.host) : "", port: isSet(object.port) ? Number(object.port) : 0 };
   },
 
   toJSON(message: ServiceConnection): unknown {
@@ -68,9 +62,7 @@ export const ServiceConnection = {
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<ServiceConnection>, I>>(
-    object: I
-  ): ServiceConnection {
+  fromPartial<I extends Exact<DeepPartial<ServiceConnection>, I>>(object: I): ServiceConnection {
     const message = createBaseServiceConnection();
     message.host = object.host ?? "";
     message.port = object.port ?? 0;
@@ -90,42 +82,24 @@ function createBaseEnvironmentInfo(): EnvironmentInfo {
 }
 
 export const EnvironmentInfo = {
-  encode(
-    message: EnvironmentInfo,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: EnvironmentInfo, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.serverVersion !== "") {
       writer.uint32(10).string(message.serverVersion);
     }
     if (message.artifactService !== undefined) {
-      ServiceConnection.encode(
-        message.artifactService,
-        writer.uint32(18).fork()
-      ).ldelim();
+      ServiceConnection.encode(message.artifactService, writer.uint32(18).fork()).ldelim();
     }
     if (message.modelServing !== undefined) {
-      ServiceConnection.encode(
-        message.modelServing,
-        writer.uint32(26).fork()
-      ).ldelim();
+      ServiceConnection.encode(message.modelServing, writer.uint32(26).fork()).ldelim();
     }
     if (message.dataSets !== undefined) {
-      ServiceConnection.encode(
-        message.dataSets,
-        writer.uint32(34).fork()
-      ).ldelim();
+      ServiceConnection.encode(message.dataSets, writer.uint32(34).fork()).ldelim();
     }
     if (message.pipelinesUi !== undefined) {
-      ServiceConnection.encode(
-        message.pipelinesUi,
-        writer.uint32(42).fork()
-      ).ldelim();
+      ServiceConnection.encode(message.pipelinesUi, writer.uint32(42).fork()).ldelim();
     }
     if (message.modelsUi !== undefined) {
-      ServiceConnection.encode(
-        message.modelsUi,
-        writer.uint32(50).fork()
-      ).ldelim();
+      ServiceConnection.encode(message.modelsUi, writer.uint32(50).fork()).ldelim();
     }
     return writer;
   },
@@ -141,25 +115,16 @@ export const EnvironmentInfo = {
           message.serverVersion = reader.string();
           break;
         case 2:
-          message.artifactService = ServiceConnection.decode(
-            reader,
-            reader.uint32()
-          );
+          message.artifactService = ServiceConnection.decode(reader, reader.uint32());
           break;
         case 3:
-          message.modelServing = ServiceConnection.decode(
-            reader,
-            reader.uint32()
-          );
+          message.modelServing = ServiceConnection.decode(reader, reader.uint32());
           break;
         case 4:
           message.dataSets = ServiceConnection.decode(reader, reader.uint32());
           break;
         case 5:
-          message.pipelinesUi = ServiceConnection.decode(
-            reader,
-            reader.uint32()
-          );
+          message.pipelinesUi = ServiceConnection.decode(reader, reader.uint32());
           break;
         case 6:
           message.modelsUi = ServiceConnection.decode(reader, reader.uint32());
@@ -174,109 +139,63 @@ export const EnvironmentInfo = {
 
   fromJSON(object: any): EnvironmentInfo {
     return {
-      serverVersion: isSet(object.serverVersion)
-        ? String(object.serverVersion)
-        : "",
-      artifactService: isSet(object.artifactService)
-        ? ServiceConnection.fromJSON(object.artifactService)
-        : undefined,
-      modelServing: isSet(object.modelServing)
-        ? ServiceConnection.fromJSON(object.modelServing)
-        : undefined,
-      dataSets: isSet(object.dataSets)
-        ? ServiceConnection.fromJSON(object.dataSets)
-        : undefined,
-      pipelinesUi: isSet(object.pipelinesUi)
-        ? ServiceConnection.fromJSON(object.pipelinesUi)
-        : undefined,
-      modelsUi: isSet(object.modelsUi)
-        ? ServiceConnection.fromJSON(object.modelsUi)
-        : undefined,
+      serverVersion: isSet(object.serverVersion) ? String(object.serverVersion) : "",
+      artifactService: isSet(object.artifactService) ? ServiceConnection.fromJSON(object.artifactService) : undefined,
+      modelServing: isSet(object.modelServing) ? ServiceConnection.fromJSON(object.modelServing) : undefined,
+      dataSets: isSet(object.dataSets) ? ServiceConnection.fromJSON(object.dataSets) : undefined,
+      pipelinesUi: isSet(object.pipelinesUi) ? ServiceConnection.fromJSON(object.pipelinesUi) : undefined,
+      modelsUi: isSet(object.modelsUi) ? ServiceConnection.fromJSON(object.modelsUi) : undefined,
     };
   },
 
   toJSON(message: EnvironmentInfo): unknown {
     const obj: any = {};
-    message.serverVersion !== undefined &&
-      (obj.serverVersion = message.serverVersion);
+    message.serverVersion !== undefined && (obj.serverVersion = message.serverVersion);
     message.artifactService !== undefined &&
-      (obj.artifactService = message.artifactService
-        ? ServiceConnection.toJSON(message.artifactService)
-        : undefined);
+      (obj.artifactService = message.artifactService ? ServiceConnection.toJSON(message.artifactService) : undefined);
     message.modelServing !== undefined &&
-      (obj.modelServing = message.modelServing
-        ? ServiceConnection.toJSON(message.modelServing)
-        : undefined);
+      (obj.modelServing = message.modelServing ? ServiceConnection.toJSON(message.modelServing) : undefined);
     message.dataSets !== undefined &&
-      (obj.dataSets = message.dataSets
-        ? ServiceConnection.toJSON(message.dataSets)
-        : undefined);
+      (obj.dataSets = message.dataSets ? ServiceConnection.toJSON(message.dataSets) : undefined);
     message.pipelinesUi !== undefined &&
-      (obj.pipelinesUi = message.pipelinesUi
-        ? ServiceConnection.toJSON(message.pipelinesUi)
-        : undefined);
+      (obj.pipelinesUi = message.pipelinesUi ? ServiceConnection.toJSON(message.pipelinesUi) : undefined);
     message.modelsUi !== undefined &&
-      (obj.modelsUi = message.modelsUi
-        ? ServiceConnection.toJSON(message.modelsUi)
-        : undefined);
+      (obj.modelsUi = message.modelsUi ? ServiceConnection.toJSON(message.modelsUi) : undefined);
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<EnvironmentInfo>, I>>(
-    object: I
-  ): EnvironmentInfo {
+  fromPartial<I extends Exact<DeepPartial<EnvironmentInfo>, I>>(object: I): EnvironmentInfo {
     const message = createBaseEnvironmentInfo();
     message.serverVersion = object.serverVersion ?? "";
-    message.artifactService =
-      object.artifactService !== undefined && object.artifactService !== null
-        ? ServiceConnection.fromPartial(object.artifactService)
-        : undefined;
-    message.modelServing =
-      object.modelServing !== undefined && object.modelServing !== null
-        ? ServiceConnection.fromPartial(object.modelServing)
-        : undefined;
-    message.dataSets =
-      object.dataSets !== undefined && object.dataSets !== null
-        ? ServiceConnection.fromPartial(object.dataSets)
-        : undefined;
-    message.pipelinesUi =
-      object.pipelinesUi !== undefined && object.pipelinesUi !== null
-        ? ServiceConnection.fromPartial(object.pipelinesUi)
-        : undefined;
-    message.modelsUi =
-      object.modelsUi !== undefined && object.modelsUi !== null
-        ? ServiceConnection.fromPartial(object.modelsUi)
-        : undefined;
+    message.artifactService = (object.artifactService !== undefined && object.artifactService !== null)
+      ? ServiceConnection.fromPartial(object.artifactService)
+      : undefined;
+    message.modelServing = (object.modelServing !== undefined && object.modelServing !== null)
+      ? ServiceConnection.fromPartial(object.modelServing)
+      : undefined;
+    message.dataSets = (object.dataSets !== undefined && object.dataSets !== null)
+      ? ServiceConnection.fromPartial(object.dataSets)
+      : undefined;
+    message.pipelinesUi = (object.pipelinesUi !== undefined && object.pipelinesUi !== null)
+      ? ServiceConnection.fromPartial(object.pipelinesUi)
+      : undefined;
+    message.modelsUi = (object.modelsUi !== undefined && object.modelsUi !== null)
+      ? ServiceConnection.fromPartial(object.modelsUi)
+      : undefined;
     return message;
   },
 };
 
-type Builtin =
-  | Date
-  | Function
-  | Uint8Array
-  | string
-  | number
-  | boolean
-  | undefined;
+type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
-type DeepPartial<T> = T extends Builtin
-  ? T
-  : T extends Array<infer U>
-  ? Array<DeepPartial<U>>
-  : T extends ReadonlyArray<infer U>
-  ? ReadonlyArray<DeepPartial<U>>
-  : T extends {}
-  ? { [K in keyof T]?: DeepPartial<T[K]> }
+type DeepPartial<T> = T extends Builtin ? T
+  : T extends Array<infer U> ? Array<DeepPartial<U>> : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
+  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
 
 type KeysOfUnion<T> = T extends T ? keyof T : never;
-type Exact<P, I extends P> = P extends Builtin
-  ? P
-  : P & { [K in keyof P]: Exact<P[K], I[K]> } & Record<
-        Exclude<keyof I, KeysOfUnion<P>>,
-        never
-      >;
+type Exact<P, I extends P> = P extends Builtin ? P
+  : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
 
 function isSet(value: any): boolean {
   return value !== null && value !== undefined;
