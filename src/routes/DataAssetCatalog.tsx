@@ -80,7 +80,7 @@ const DataAssetItem: React.FC<DataAssetItemProps> = (props) => {
   const data = signals.map((signal) => ({
     name: signal.name,
     description: signal.description,
-    dataType: signal.dataType.toString(),
+    dataType: signal.dataType?.toString(),
   }));
 
   return (
